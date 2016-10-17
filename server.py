@@ -24,9 +24,14 @@ def get_elephantsql_dsn(vcap_services):
 def home_page():
     now = datetime.datetime.now()
     return render_template('home.html', current_time=now.ctime())
+
 @app.route('/hakan')
 def hakan_page():
     return render_template('hakan.html')
+
+@app.route('/gokturk')
+def gokturk_page():
+    return render_template('gokturk.html')
 
 if __name__ == '__main__':
     VCAP_APP_PORT = os.getenv('VCAP_APP_PORT')
