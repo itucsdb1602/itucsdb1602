@@ -33,6 +33,10 @@ def hakan_page():
 def gokturk_page():
     return render_template('gokturk.html')
 
+@app.route('/bilal')
+def bilal_page():
+    return render_template('bilal.html')
+
 if __name__ == '__main__':
     VCAP_APP_PORT = os.getenv('VCAP_APP_PORT')
     if VCAP_APP_PORT is not None:
