@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Home</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
-  </head>
-  <body>
-    <h1>Hello from <a href = "/hakan">Hakan!</a></h1>
-    <h1>Hello from <a href = "/gokturk">Göktürk!</a></h1>
-    <h1>Hello from <a href = "/bilal">Bilal!</a></h1>
-    <h1>Hello from <a href = "/ozgun">Ozgun!</a></h1>
+<head>
+	<meta charset="utf-8" />
+	<title>Home</title>
+	<link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" />
+</head>
+<body>
+<h1>Hello from <a href="/hakan">Hakan!</a></h1>
 
+<h1>Hello from <a href="/gokturk">G&ouml;kt&uuml;rk!</a></h1>
 
+<h1>Hello from <a href="/bilal">Bilal!</a></h1>
 
-    <footer>
-      <div id="datetime">{{ current_time }}</div>
-    </footer>
-  </body>
+<h1>Hello from <a href="/ozgun">Ozgun!</a></h1>
+
+<h1>Hello from <a href="/samet">Samet!</a></h1>
+
+<footer>
+<div id="datetime">{{ current_time }}</div>
+</footer>
+</body>
 </html>
