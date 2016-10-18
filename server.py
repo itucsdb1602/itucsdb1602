@@ -39,6 +39,9 @@ def bilal_page():
 @app.route('/ozgun')
 def ozgun_page():
     return render_template('ozgun.html')
+@app.route('/samet')
+def samet_page():
+    return render_template('samet.html')
 if __name__ == '__main__':
     VCAP_APP_PORT = os.getenv('VCAP_APP_PORT')
     if VCAP_APP_PORT is not None:
