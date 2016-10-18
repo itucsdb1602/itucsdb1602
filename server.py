@@ -36,7 +36,9 @@ def gokturk_page():
 @app.route('/bilal')
 def bilal_page():
     return render_template('bilal.html')
-
+@app.route('/ozgun')
+def ozgun_page():
+    return render_template('ozgun.html')
 if __name__ == '__main__':
     VCAP_APP_PORT = os.getenv('VCAP_APP_PORT')
     if VCAP_APP_PORT is not None:
