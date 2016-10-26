@@ -1,23 +1,36 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8" />
-	<title>Home</title>
-	<link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" />
-</head>
-<body>
-<h1>Hello from <a href="/hakan">Hakan!</a></h1>
-
-<h1>Hello from <a href="/gokturk">G&ouml;kt&uuml;rk!</a></h1>
-
-<h1>Hello from <a href="/bilal">Bilal!</a></h1>
-
-<h1>Hello from <a href="/ozgun">Ozgun!</a></h1>
-
-<h1>Hello from <a href="/samet">Samet!</a></h1>
-
-<footer>
-<div id="datetime">{{ current_time }}</div>
-</footer>
-</body>
-</html>
+{% extends "layout.html" %}
+{% block title %} Home {% endblock %}
+{% block content %}
+	<div class="col-sm-3 well">
+		<div class="well">
+			<p>Welcome to postIT!</p>
+		</div>
+		<div class = "well">
+			<p>tagITs</p>
+			<p><button type = "button" class="btn btn-danger btn-sm">Tag 1</button>
+			<button type = "button" class="btn btn-danger btn-sm">Tag 2</button>
+			<button type = "button" class="btn btn-danger btn-sm">Tag 3</button>
+		</div>
+		<div class="alert alert-success fade in">
+	        <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+	        <p><strong>Hey!</strong></p>
+	        We have announcement for you!
+      	</div>
+	</div>
+	<div class = "col-sm-9">
+		<div class = "row">
+			<div class = "col-sm-3">
+				<div class = "well">
+					<p>Hakan</p>
+					<p><button type = "button" class="btn btn-danger btn-sm">Tag 1</button></p>
+				</div>
+			</div>
+			<div class = "col-sm-9">
+				<div class = "well">
+					<p> Post Content. You can go with <a href = "/hakan">this</a> link to initialize database. </p>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+{% block footer %} <p>postIT Home Page<p> {% endblock %}
