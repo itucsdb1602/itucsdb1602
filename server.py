@@ -2,12 +2,15 @@ import datetime
 import os
 import json
 import re
+import psycopg2 as dbapi2
 
 from flask import Flask
 from flask import render_template
+from tag_handler import tag
 
 
 app = Flask(__name__)
+app.register_blueprint(tag);
 
 def get_elephantsql_dsn(vcap_services):
     """Returns the data source name for ElephantSQL."""
