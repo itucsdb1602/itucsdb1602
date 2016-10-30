@@ -1,16 +1,27 @@
 {% extends "layout.html" %}
 {% block title %} Home {% endblock %}
 {% block content %}
+<script type="text/javascript">
+$(function(){
+	$('#create_tag_btn').click(function(){
+		location.href = "{{ url_for('tag.add_tag') }}";
+	});
+});
+</script>
 	<div class="col-sm-3 well">
 		<div class="well">
 			<p>Welcome to postIT!</p>
 		</div>
 		<div class = "well">
 			<p>tagITs</p>
-			<p><button type = "button" class="btn btn-danger btn-sm">Tag 1</button>
-			<button type = "button" class="btn btn-danger btn-sm">Tag 2</button>
-			<button type = "button" class="btn btn-danger btn-sm">Tag 3</button></p>
-			<p><button type = "button" class = "btn btn-success "><span class="glyphicon glyphicon-plus"></span> Create Tag</button></p>
+			<p>
+			{% if all_tags %}
+			{% for tag_id, tag in all_tags %}
+			<button type = "button" class="btn btn-danger btn-sm">{{ tag.name }}</button>
+			{% endfor %}
+			{% endif %}
+			</p>
+			<p><button type = "button" class = "btn btn-success" id = "create_tag_btn"><span class="glyphicon glyphicon-plus"></span> Create Tag</button></p>
 			<p><button type = "button" class = "btn btn-success"><span class="glyphicon glyphicon-plus"></span> Create Post</button></p>
 		</div>
 		<div class="alert alert-success fade in">

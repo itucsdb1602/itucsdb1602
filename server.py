@@ -25,8 +25,11 @@ def get_elephantsql_dsn(vcap_services):
 
 @app.route('/')
 def home_page():
-    now = datetime.datetime.now()
-    return render_template('home.html', current_time=now.ctime())
+    try:
+        all_tags = tag.service.get_all_tags()
+    except dbapi2.Error as e:
+        return render_template('home.html', all_tags = None)
+    return render_template('home.html',all_tags = all_tags)
 
 @app.route('/hakan')
 def hakan_page():
