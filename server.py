@@ -7,10 +7,12 @@ import psycopg2 as dbapi2
 from flask import Flask
 from flask import render_template
 from tag_handler import tag
+from announcement_handler import announcement
 
 
 app = Flask(__name__)
-app.register_blueprint(tag);
+app.register_blueprint(tag)
+app.register_blueprint(announcement)
 
 def get_elephantsql_dsn(vcap_services):
     """Returns the data source name for ElephantSQL."""
