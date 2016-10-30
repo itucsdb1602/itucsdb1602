@@ -6,6 +6,17 @@ $(function(){
 	$('#create_tag_btn').click(function(){
 		location.href = "{{ url_for('tag.add_tag') }}";
 	});
+	$('#post_1').click(function(){
+		$.ajax({
+			type:"POST",
+			url: "{{ url_for('pLikes.add_pLikes',post_id=1) }}",
+			data: JSON.stringify({'post_id':'1','user_id':'1'}),
+			contentType: 'application/json;charset=UTF-8',
+			success: function(result){
+				console.log(result.status);
+			}
+		})
+	})
 });
 </script>
 	<div class="col-sm-3 well">
@@ -45,8 +56,8 @@ $(function(){
 				<div class = "well">
 					<p> <a href = "/hakan">Post Header. You can go with this link to initialize database.</a> </p>
 					<p class = "pull-right">
-						<button type = "button" class="btn btn-success btn-sm disabled" style = "opacity: 1;"><span class="glyphicon glyphicon-thumbs-up"></span> 1234</button>
-						<button type = "button" class="btn btn-default btn-sm disabled" style = "opacity: 1"><span class="glyphicon glyphicon-comment"></span> 0</button>
+						<button type = "button" class="btn btn-success btn-sm" id="post_1"><span class="glyphicon glyphicon-thumbs-up"></span> {{post_likes}} </button>
+						<button type = "button" class="btn btn-default btn-sm" ><span class="glyphicon glyphicon-comment"></span> 0</button>
 					</p>
 				</div>
 			</div>
@@ -69,8 +80,8 @@ $(function(){
 				<div class = "well">
 					<p><a href = "/gokturk"> Post Content. You can go with this link to initialize database.</a> </p>
 					<p class = "pull-right">
-						<button type = "button" class="btn btn-default btn-sm disabled" style = "opacity: 1;"><span class="glyphicon glyphicon-thumbs-up"></span> 0</button>
-						<button type = "button" class="btn btn-default btn-sm disabled" style = "opacity: 1;"><span class="glyphicon glyphicon-comment"></span> 0</button>
+						<button type = "button" class="btn btn-default btn-sm" id="post_2"><span class="glyphicon glyphicon-thumbs-up"></span> 0</button>
+						<button type = "button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-comment"></span> 0</button>
 					</p>
 				</div>
 			</div>

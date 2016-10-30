@@ -8,11 +8,13 @@ from flask import Flask
 from flask import render_template
 from tag_handler import tag
 from announcement_handler import announcement
+from post_like_handler import pLikes
 
 
 app = Flask(__name__)
 app.register_blueprint(tag)
 app.register_blueprint(announcement)
+app.register_blueprint(pLikes)
 
 def get_elephantsql_dsn(vcap_services):
     """Returns the data source name for ElephantSQL."""
@@ -30,8 +32,12 @@ def home_page():
     try:
         all_tags = tag.service.get_all_tags()
     except dbapi2.Error as e:
-        return render_template('home.html', all_tags = None)
-    return render_template('home.html',all_tags = all_tags)
+        all_tags = None
+    try:
+        post_likes = pLikes.service.get_all_post_like(1)
+    except dbapi2.Error as e:
+        post_likes = 0
+    return render_template('home.html',all_tags = all_tags,post_likes=post_likes)
 
 @app.route('/hakan')
 def hakan_page():
@@ -50,6 +56,7 @@ def ozgun_page():
 @app.route('/samet')
 def samet_page():
     return render_template('samet.html')
+
 if __name__ == '__main__':
     VCAP_APP_PORT = os.getenv('VCAP_APP_PORT')
     if VCAP_APP_PORT is not None:
