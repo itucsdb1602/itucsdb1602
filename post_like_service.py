@@ -29,3 +29,10 @@ class PostLikeService:
             cursor.execute(query,(post_id,))
             all_post_likes = cursor.fetchone()[0]
             return all_post_likes
+
+    def delete_post_like(self,PostLike):
+        with dbapi2.connect(current_app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "DELETE FROM pLikes WHERE post_id = %s AND user_id = %s"
+            cursor.execute(query,(PostLike.post_id,PostLike.user_id))
+            connection.commit()

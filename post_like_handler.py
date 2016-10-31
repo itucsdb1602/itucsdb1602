@@ -28,3 +28,14 @@ def add_pLikes():
             return jsonify({'status' : 'FAIL', 'errcode' : e.pgcode})
 
         return jsonify({'status' : 'OK', 'errcode' : '00000'})
+
+@pLikes.route('/pLikes/delete', methods = ['GET', 'POST'])
+def delete_pLike():
+    if request.method == 'POST':
+        pL = PostLike(request.json['user_id'],request.json['post_id'])
+        try:
+           pLikes.service.delete_post_like(pL)
+        except dbapi2.Error as e:
+            return jsonify({'status' : 'FAIL', 'errcode' : e.pgcode})
+
+        return jsonify({'status' : 'OK', 'errcode' : '00000'})
