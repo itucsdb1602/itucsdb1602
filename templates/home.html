@@ -9,7 +9,7 @@ $(function(){
 	$('#post_1').click(function(){
 		$.ajax({
 			type:"POST",
-			url: "{{ url_for('pLikes.add_pLikes',post_id=1) }}",
+			url: "{{ url_for('pLikes.add_pLikes') }}",
 			data: JSON.stringify({'post_id':'1','user_id':'1'}),
 			contentType: 'application/json;charset=UTF-8',
 			success: function(result){
