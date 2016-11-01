@@ -10,12 +10,14 @@ from tag_handler import tag
 from announcement_handler import announcement
 from post_like_handler import pLikes
 from user_handler import user
+from keywords_handler import keywords
 
 app = Flask(__name__)
 app.register_blueprint(tag)
 app.register_blueprint(announcement)
 app.register_blueprint(pLikes)
 app.register_blueprint(user);
+app.register_blueprint(keywords);
 
 
 

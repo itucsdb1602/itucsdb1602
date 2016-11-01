@@ -3,7 +3,6 @@ from flask import Blueprint, render_template, jsonify
 from flask.globals import current_app, request
 from announcement_service import AnnouncementService
 from announcement_class import Announcement
-from crypt import methods
 
 announcement = Blueprint('announcement',__name__)
 announcement.service = AnnouncementService()

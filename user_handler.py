@@ -3,7 +3,6 @@ from flask import Blueprint, render_template, url_for , redirect, request
 from flask.globals import current_app, request
 from user_service import UserService
 from user_class import User
-from crypt import methods
 
 user = Blueprint('user',__name__)
 user.service = UserService()
