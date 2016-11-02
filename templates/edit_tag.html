@@ -8,12 +8,13 @@ function popAlertDiv(status, errcode){
 	if (status == "OK"){
 
 		$('#error_alert').removeClass().addClass('alert alert-success alert-dismissible');
-		$('#error_container').append('<strong>Success!</strong> Data is added successfully!');
+		$('#error_container').append('<strong>Success!</strong> Data is updated successfully!');
 		$('#error_alert').show();
 	}
 	else{
 		$('#error_alert').removeClass().addClass('alert alert-danger alert-dismissible');
 		if(errcode == 23505){
+			$('#edit_tag').val('{{upd_tag.name}}');
 			$('#error_container').append('<strong>Error!</strong> Data already exist!');
 		}
 		else{
@@ -27,13 +28,18 @@ $(function(){
 	$('#error_close_btn').click(function(){
 		$('#error_alert').hide();
 	});
-	$('#add_tag_button').click(function(){
+	$('#edit_tag_button').click(function(){
 		$.ajax({
 			type: "POST",
-			url: "{{ url_for('tag.add_tag') }}",
-			data: JSON.stringify({'name': '' + $('#add_tag').val()}),
+			url: "{{ url_for('tag.update_tag',tag_id = upd_tag.id ) }}",
+			data: JSON.stringify({
+				'id'  : '{{upd_tag.id}}',
+				'name': '' + $('#edit_tag').val()
+
+			}),
 			contentType: 'application/json;charset=UTF-8',
 			success: function(result){
+				console.log(result);
 				popAlertDiv(result.status, result.errcode);
 			}
 		});
@@ -42,7 +48,7 @@ $(function(){
 </script>
 	<div class = "col-sm-6 col-sm-offset-3">
 		<div class = "page-header">
-			<h1>Add Tag</h1>
+			<h1>Edit Tag</h1>
 		</div>
 		<div role="alert" id = "error_alert">
 		  <button type="button" class="close" aria-label="Close" id = "error_close_btn"><span aria-hidden="true">&times;</span></button>
@@ -52,12 +58,12 @@ $(function(){
 		  <div class="form-group">
 		    <label class="control-label col-sm-2">Tag:</label>
 		    <div class="col-sm-8">
-		      <input type="text" class="form-control" id="add_tag" placeholder="Enter your tag">
+		      <input type="text" class="form-control" id="edit_tag" value = "{{upd_tag.name}}">
 		    </div>
 		  </div>
 		  <div class="form-group">
-		    <div class="col-sm-offset-2 col-sm-10">
-		      <p><button type = "button" id = "add_tag_button" class = "btn btn-success "><span class="glyphicon glyphicon-plus"></span> Create Tag</button></p>
+		    <div class="col-sm-offset-1 col-sm-10">
+		      <p><button type = "button" id = "edit_tag_button" class = "btn btn-warning "><span class="glyphicon glyphicon-pencil"></span> Update Tag</button></p>
 		    </div>
 		  </div>
 		</form>
