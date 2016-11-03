@@ -3,3 +3,8 @@ class keywords:
         self.id = id
         self.name = name
 
+    def json_serialize(self):
+        return {
+            'id' : self.id,
+            'name' : self.name
+        }

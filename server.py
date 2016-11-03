@@ -42,7 +42,7 @@ def home_page():
         post_likes = pLikes.service.get_all_post_like(1)
     except dbapi2.Error as e:
         post_likes = 0
-    return render_template('home.html',all_tags = all_tags,post_likes=post_likes)
+    return render_template('home.html', all_tags=all_tags, post_likes=post_likes)
 
 @app.route('/hakan')
 def hakan_page():
