@@ -8,13 +8,13 @@ function popAlertDiv(status, errcode){
 	if (status == "OK"){
 
 		$('#error_alert').removeClass().addClass('alert alert-success alert-dismissible');
-		$('#error_container').append('<strong>Success!</strong> Data is added successfully!');
+		$('#error_container').append('<strong>Success!</strong> Data is updated successfully!');
 		$('#error_alert').show();
 	}
 	else{
 		$('#error_alert').removeClass().addClass('alert alert-danger alert-dismissible');
 		if(errcode == 23505){
-			$('#error_container').append('<strong>Error!</strong> Data already exist!');
+			$('#error_container').append('<strong>Error!</strong> Data does not exist!');
 		}
 		else{
 			$('#error_container').append('<strong>Error!</strong> Some error occured. Please contact Bilal!');
@@ -27,11 +27,11 @@ $(function(){
 	$('#error_close_btn').click(function(){
 		$('#error_alert').hide();
 	});
-	$('#add_announcement_button').click(function(){
+	$('#update_announcement_button').click(function(){
 		$.ajax({
 			type: "POST",
-			url: "{{ url_for('announcement.add_announcement') }}",
-			data: JSON.stringify({'name': '' + $('#add_announcement').val()}),
+			url: "{{ url_for('announcement.update_announcement') }}",
+			data: JSON.stringify({'name': '' + $('#update_announcement').val()}),
 			contentType: 'application/json;charset=UTF-8',
 			success: function(result){
 				popAlertDiv(result.status, result.errcode);
@@ -42,7 +42,7 @@ $(function(){
 </script>
 	<div class = "col-sm-6 col-sm-offset-3">
 		<div class = "page-header">
-			<h1>Add Announcement</h1>
+			<h1>Update Announcement</h1>
 		</div>
 		<div role="alert" id = "error_alert">
 		  <button type="button" class="close" aria-label="Close" id = "error_close_btn"><span aria-hidden="true">&times;</span></button>
@@ -52,12 +52,12 @@ $(function(){
 		  <div class="form-group">
 		    <label class="control-label col-sm-2">Announcement:</label>
 		    <div class="col-sm-10">
-		      <input type="text" class="form-control" id="add_announcement" placeholder="Enter your announcement">
+		      <input type="text" class="form-control" id="update_announcement" placeholder="Enter your announcement">
 		    </div>
 		  </div>
 		  <div class="form-group">
 		    <div class="col-sm-offset-2 col-sm-10">
-		      <p><button type = "button" id = "add_announcement_button" class = "btn btn-success "><span class="glyphicon glyphicon-plus"></span> Create announcement</button></p>
+		      <p><button type = "button" id = "update_announcement_button" class = "btn btn-primary "><span class="glyphicon glyphicon-repeat"></span>Update announcement</button></p>
 		    </div>
 		  </div>
 		</form>

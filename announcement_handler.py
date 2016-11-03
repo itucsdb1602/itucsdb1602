@@ -8,17 +8,14 @@ announcement = Blueprint('announcement',__name__)
 announcement.service = AnnouncementService()
 
 @announcement.route('/announcements/init')
-def init_tag_database():
-    with dbapi2.connect(current_app.config['dsn']) as connection:
-        cursor = connection.cursor()
-        query = """CREATE TABLE announcements (
-            id SERIAL PRIMARY KEY,
-            name TEXT UNIQUE NOT NULL,
-            fromuserid INT NOT NULL,
-            crt_time TIMESTAMP NOT NULL
-        )"""
-        cursor.execute(query)
-        connection.commit()
+def init_announcement_tbl():
+    if request.method == 'GET':
+        try:
+            announcement.service.init_announcement_tbl()
+        except dbapi2.Error as e:
+            return jsonify({'status' : 'FAIL', 'errcode' : e.pgcode})
+
+        return jsonify({'status' : 'OK', 'errcode' : '00000'})
 
 @announcement.route('/announcements/add', methods = ['GET', 'POST'])
 def add_announcement():
@@ -26,5 +23,45 @@ def add_announcement():
         return render_template('add_announcement.html')
     else:
         annoObject = Announcement(request.json['name'],1)
-        announcement.service.add_announcement(annoObject)
-        return jsonify({'status':'OK'});
+        try:
+            announcement.service.add_announcement(annoObject)
+        except dbapi2.Error as e:
+            return jsonify({'status' : 'FAIL', 'errcode' : e.pgcode})
+
+        return jsonify({'status' : 'OK', 'errcode' : '00000'})
+@announcement.route('/announcements/delete', methods = ['GET', 'POST'])
+def delete_announcement():
+    if request.method == 'GET':
+        return render_template('delete_announcement.html')
+    else:
+        annoObject = Announcement(request.json['name'],1)
+        try:
+            announcement.service.delete_announcement(annoObject)
+        except dbapi2.Error as e:
+            return jsonify({'status' : 'FAIL', 'errcode' : e.pgcode})
+
+        return jsonify({'status' : 'OK', 'errcode' : '00000'})
+@announcement.route('/announcements/getall', methods = ['GET', 'POST'])
+def get_announcement():
+    if request.method == 'GET':
+        return render_template('get_announcement.html')
+    else:
+        annoObject = Announcement(request.json['name'],1)
+        try:
+            announcement.service.get_announcement(annoObject)
+        except dbapi2.Error as e:
+            return jsonify({'status' : 'FAIL', 'errcode' : e.pgcode})
+
+        return jsonify({'status' : 'OK', 'errcode' : '00000'})
+@announcement.route('/announcements/update', methods = ['GET', 'POST'])
+def update_announcement():
+    if request.method == 'GET':
+        return render_template('update_announcement.html')
+    else:
+        annoObject = Announcement(request.json['name'],1)
+        try:
+            announcement.service.update_announcement(annoObject)
+        except dbapi2.Error as e:
+            return jsonify({'status' : 'FAIL', 'errcode' : e.pgcode})
+
+        return jsonify({'status' : 'OK', 'errcode' : '00000'})
