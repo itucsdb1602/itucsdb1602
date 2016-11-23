@@ -1,4 +1,5 @@
 import psycopg2 as dbapi2
+import json
 from flask import Blueprint, render_template, jsonify
 from flask.globals import current_app, request
 from announcement_service import AnnouncementService
@@ -22,45 +23,42 @@ def add_announcement():
     if request.method == 'GET':
         return render_template('add_announcement.html')
     else:
-        annoObject = Announcement(request.json['name'],1)
+        annoObject = Announcement(request.json['name'],1)# sayi control edilecek!!!!!!
         try:
             announcement.service.add_announcement(annoObject)
         except dbapi2.Error as e:
             return jsonify({'status' : 'FAIL', 'errcode' : e.pgcode})
 
         return jsonify({'status' : 'OK', 'errcode' : '00000'})
-@announcement.route('/announcements/delete', methods = ['GET', 'POST'])
-def delete_announcement():
-    if request.method == 'GET':
-        return render_template('delete_announcement.html')
-    else:
-        annoObject = Announcement(request.json['name'],1)
-        try:
-            announcement.service.delete_announcement(annoObject)
-        except dbapi2.Error as e:
-            return jsonify({'status' : 'FAIL', 'errcode' : e.pgcode})
 
-        return jsonify({'status' : 'OK', 'errcode' : '00000'})
-@announcement.route('/announcements/getall', methods = ['GET', 'POST'])
-def get_announcement():
+@announcement.route('/announcements', methods = ['GET', 'POST'])
+def get_announcements():
     if request.method == 'GET':
-        return render_template('get_announcement.html')
+        all_announcements = announcement.service.get_all_announcements()
+        return render_template('announcements.html',all_announcements = all_announcements)
     else:
-        annoObject = Announcement(request.json['name'],1)
-        try:
-            announcement.service.get_announcement(annoObject)
-        except dbapi2.Error as e:
-            return jsonify({'status' : 'FAIL', 'errcode' : e.pgcode})
+        if request.json['op'] == 'delete':
+            try:
+                announcement.service.delete_announcement(request.json['announcement_id'])
+            except dbapi2.Error as e:
+                return jsonify({'status' : 'FAIL', 'errcode' : e.pgcode})
 
-        return jsonify({'status' : 'OK', 'errcode' : '00000'})
-@announcement.route('/announcements/update', methods = ['GET', 'POST'])
-def update_announcement():
+            return jsonify({'status' : 'OK', 'errcode' : '00000'})
+        elif request.json['op'] == 'search':
+            try:
+                announcement_search_result = announcement.service.get_announcements_by_name(request.json['announcement_name'])
+            except dbapi2.Error as e:
+                return jsonify({'status' : 'FAIL', 'errcode' : e.pgcode})
+            return jsonify({'status' : 'OK', 'errcode' : '00000', 'data' : announcement_search_result})
+
+@announcement.route('/announcements/<int:announcement_id>', methods = ['GET', 'POST'])
+def update_announcement(announcement_id):
     if request.method == 'GET':
-        return render_template('update_announcement.html')
+        upd_announcement = announcement.service.get_announcement(announcement_id)
+        return render_template('edit_announcement.html',upd_announcement = upd_announcement);
     else:
-        annoObject = Announcement(request.json['name'],1)
         try:
-            announcement.service.update_announcement(annoObject)
+            announcement.service.update_announcement(request.json['id'],request.json['name'])
         except dbapi2.Error as e:
             return jsonify({'status' : 'FAIL', 'errcode' : e.pgcode})
 

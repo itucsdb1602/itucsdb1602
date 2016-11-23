@@ -22,21 +22,42 @@ class AnnouncementService:
              query = "INSERT INTO announcements (name,fromuserid,crt_time) VALUES (%s,1,CURRENT_TIMESTAMP) "
              cursor.execute(query,(announcement.name,))
              connection.commit()
-    def delete_announcement(self,announcement):
+
+    def get_all_announcements(self):
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "DELETE FROM announcements WHERE name = %s"
-            cursor.execute(query,(announcement.name,))
+            query = "SELECT id,name,fromuserid FROM announcements"
+            cursor.execute(query)
+            all_announcements = [(key, Announcement(name,fromuserid))
+                        for key,name,fromuserid in cursor]
+            return all_announcements
+
+    def get_announcements_by_name(self,announcement_name):
+        with dbapi2.connect(current_app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT id,name FROM announcements WHERE name ILIKE %s"
+            cursor.execute(query,("%" + announcement_name + "%",))
+            announcement_search_result = [Announcement(name,key).json_serialize()
+                        for key,name in cursor]
+            return announcement_search_result
+    def get_announcement(self,announcement_id):
+        with dbapi2.connect(current_app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT id,name FROM announcements WHERE id = %s"
+            cursor.execute(query,(announcement_id,))
+            key,name = cursor.fetchone()
+            return Announcement(name,key)
+
+    def update_announcement(self,announcement_id,input_name):
+        with dbapi2.connect(current_app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "UPDATE announcements SET name = %s WHERE id = %s"
+            cursor.execute(query,(input_name,announcement_id))
             connection.commit()
-    def get_announcement(self,announcement):
+
+    def delete_announcement(self,announcement_id):
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "SELECT * FROM announcements WHERE name = %s"
-            cursor.execute(query,(announcement.name,))
-            connection.commit()
-    def update_announcement(self,announcement):
-        with dbapi2.connect(current_app.config['dsn']) as connection:
-            cursor = connection.cursor()
-            query = "UPDATE announcements SET name = %s"
-            cursor.execute(query,(announcement.name,))
+            query = "DELETE FROM announcements WHERE id = %s"
+            cursor.execute(query,(announcement_id,))
             connection.commit()

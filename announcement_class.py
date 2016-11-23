@@ -6,3 +6,8 @@ class Announcement:
         self.fromuser = fromuser
         self.fromuserid = fromuserid
         self.date = date
+    def json_serialize(self):
+        return {
+            'id' : self.id,
+            'name' : self.name
+        }
