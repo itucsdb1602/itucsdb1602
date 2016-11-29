@@ -19,6 +19,7 @@ class GroupService:
              query = "INSERT INTO groups (name) VALUES (%s) "
              cursor.execute(query,(group.name,))
              connection.commit()
+    #for groups.html
     def get_all_groups(self):
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
