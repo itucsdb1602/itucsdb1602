@@ -1,0 +1,92 @@
+{% extends "layout.html" %}
+{% block title %} Hakan's Page {% endblock %}
+{% block content %}
+<link href="../static/summernote/summernote.css" rel="stylesheet">
+<script src="../static/summernote/summernote.js"></script>
+<script type="text/javascript">
+function popAlertDiv(status, errcode){
+	$('#error_alert').hide();
+	$('#error_container').empty();
+	if (status == "OK"){
+
+		$('#error_alert').removeClass().addClass('alert alert-success alert-dismissible');
+		$('#error_container').append('<strong>Success!</strong> Data is edited successfully!');
+		$('#error_alert').show();
+	}
+	else{
+		$('#error_alert').removeClass().addClass('alert alert-danger alert-dismissible');
+		if(errcode == 23505){
+			$('#error_container').append('<strong>Error!</strong> Data already exist!');
+		}
+		else{
+			$('#error_container').append('<strong>Error!</strong> Some error occured. Please contact Admin!');
+		}
+	}
+	$('#error_alert').show();
+};
+$(function(){
+	$('#tag_select').val('{{ postObject.tag_id }}');
+	$('#summernote').summernote({
+		height: 150
+	});
+	$('#summernote').summernote('code', '{{ postObject.post_text|safe }}');
+	$('#error_alert').hide();
+	$('#error_close_btn').click(function(){
+		$('#error_alert').hide();
+	});
+	$('#edit_post_button').click(function(){
+		$.ajax({
+			type: "POST",
+			url: "{{ url_for('post.update_post', post_id = postObject.id) }}",
+			data: JSON.stringify({
+									'title': $('#edit_post_title').val(),
+									'post_text': $('#summernote').summernote('code'),
+									'tag_id' : $('#tag_select').val()
+
+								}),
+			contentType: 'application/json;charset=UTF-8',
+			success: function(result){
+				console.log(result);
+				popAlertDiv(result.status, result.errcode);
+			}
+		});
+	})
+});
+</script>
+	<div class = "col-sm-6 col-sm-offset-3">
+		<div class = "page-header">
+			<h1>Edit Post</h1>
+		</div>
+		<div role="alert" id = "error_alert">
+		  <button type="button" class="close" aria-label="Close" id = "error_close_btn"><span aria-hidden="true">&times;</span></button>
+		  <div id = "error_container"></div>
+		</div>
+		<form class="form-horizontal">
+		  <div class="form-group">
+		    <label class="control-label col-sm-2">Title:</label>
+		    <div class="col-sm-8">
+		      <input type="text" class="form-control" id="edit_post_title" value = "{{ postObject.title }}" placeholder="Enter your title of post">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label class="control-label col-sm-2">Tag:</label>
+		    <div class="col-sm-8">
+		      <select class = "form-control" id = "tag_select">
+		      {% for tag_id, tag in all_tags %}
+		      	<option value = "{{tag_id}}">{{ tag.name }}</option>
+		      {% endfor %}
+		      </select>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <div class="col-sm-8" id = "summernote"></div>
+		  </div>
+		  <div class="form-group">
+		    <div class="col-sm-offset-1 col-sm-10">
+		      <p><button type = "button" id = "edit_post_button" class = "btn btn-warning "><span class="glyphicon glyphicon-pencil"></span> Update Post</button></p>
+		    </div>
+		  </div>
+		</form>
+	</div>
+{% endblock %}
+{% block footer %} <p>Hakan Görgün<p> {% endblock %}

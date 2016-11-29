@@ -6,6 +6,9 @@ $(function(){
 	$('#create_tag_btn').click(function(){
 		location.href = "{{ url_for('tag.add_tag') }}";
 	});
+	$('#create_post_btn').click(function(){
+		location.href = "{{ url_for('post.add_post') }}";
+	});
 	$('[id *= "post_like_"]').click(function(){
 		var id_string = '' + $(this).attr('id').toString();
 		console.log(id_string);
@@ -58,7 +61,7 @@ $(function(){
 			{% endif %}
 			</p>
 			<p><button type = "button" class = "btn btn-success" id = "create_tag_btn"><span class="glyphicon glyphicon-plus"></span> Create Tag</button></p>
-			<p><button type = "button" class = "btn btn-success"><span class="glyphicon glyphicon-plus"></span> Create Post</button></p>
+			<p><button type = "button" class = "btn btn-success" id = "create_post_btn"><span class="glyphicon glyphicon-plus"></span> Create Post</button></p>
 		</div>
 		<div class="alert alert-success fade in">
 	        <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>

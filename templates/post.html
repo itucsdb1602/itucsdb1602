@@ -3,6 +3,25 @@
 {% block content %}
 <script type="text/javascript">
 $(function(){
+	$('#edit_post_{{postObject.id}}').click(function(){
+		location.href = '{{ url_for("post.update_post", post_id = postObject.id) }}';
+	});
+	$('#delete_post_{{postObject.id}}').click(function(){
+		if(confirm("Are you sure?")){
+			$.ajax({
+				type: "POST",
+				url: "{{ url_for('post.get_post', post_id = postObject.id) }}",
+				data: '',
+				contentType: 'application/json;charset=UTF-8',
+				success: function(result){
+					console.log(result);
+					if(result.status == "OK"){
+						location.href = '{{ url_for("home_page") }}';
+					}
+				}
+			});
+		}
+	});
 })
 </script>
 <div class = "row" id = "post_{{post_id}}">
@@ -21,6 +40,10 @@ $(function(){
 					<h3>{{postObject.title}}</h3>
 			</div>
 			<p>{{postObject.post_text|safe}}</p>
+			<p class = "pull-left">
+				<button type = "button" class="btn btn-warning btn-sm" id = "edit_post_{{postObject.id}}" ><span class="glyphicon glyphicon-pencil"></span></button>
+				<button type = "button" class="btn btn-danger btn-sm" id = "delete_post_{{postObject.id}}" ><span class="glyphicon glyphicon-trash"></span></button>
+			</p>
 			<p class = "pull-right">
 				<button type = "button" class="btn btn-success btn-sm" id="post_1"><span class="glyphicon glyphicon-thumbs-up"></span> <div id='like_container'>0</div> </button>
 				<button type = "button" class="btn btn-default btn-sm" ><span class="glyphicon glyphicon-comment"></span> 0</button>
