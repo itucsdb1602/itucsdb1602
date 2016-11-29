@@ -12,6 +12,7 @@ class AnnouncementService:
             id SERIAL PRIMARY KEY,
             name TEXT UNIQUE NOT NULL,
             fromuserid INT NOT NULL,
+            fromgroupid INT references groups(id) ON DELETE CASCADE,
             crt_time TIMESTAMP NOT NULL
         )"""
             cursor.execute(query)
@@ -19,17 +20,17 @@ class AnnouncementService:
     def add_announcement(self,announcement):
          with dbapi2.connect(current_app.config['dsn']) as connection:
              cursor = connection.cursor()
-             query = "INSERT INTO announcements (name,fromuserid,crt_time) VALUES (%s,1,CURRENT_TIMESTAMP) "
+             query = "INSERT INTO announcements (name,fromuserid,fromgroupid,crt_time) VALUES (%s,1,1,CURRENT_TIMESTAMP) "
              cursor.execute(query,(announcement.name,))
              connection.commit()
 
     def get_all_announcements(self):
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "SELECT id,name,fromuserid FROM announcements"
+            query = "SELECT id,name,fromuserid,fromgroupid FROM announcements"
             cursor.execute(query)
-            all_announcements = [(key, Announcement(name,fromuserid))
-                        for key,name,fromuserid in cursor]
+            all_announcements = [(key, Announcement(name,fromuserid,fromgroupid))
+                        for key,name,fromuserid,fromgroupid in cursor]
             return all_announcements
 
     def get_announcements_by_name(self,announcement_name):

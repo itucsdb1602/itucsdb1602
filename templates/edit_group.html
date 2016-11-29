@@ -14,11 +14,11 @@ function popAlertDiv(status, errcode){
 	else{
 		$('#error_alert').removeClass().addClass('alert alert-danger alert-dismissible');
 		if(errcode == 23505){
-			$('#edit_announcement').val('{{upd_announcement.name}}');
+			$('#edit_group').val('{{upd_group.name}}');
 			$('#error_container').append('<strong>Error!</strong> Data already exist!');
 		}
 		else{
-			$('#error_container').append('<strong>Error!</strong> Some error occured. Please contact Admin!');
+			$('#error_container').append('<strong>Error!</strong> Some error occured. Please contact Bilal!');
 		}
 	}
 	$('#error_alert').show();
@@ -28,13 +28,13 @@ $(function(){
 	$('#error_close_btn').click(function(){
 		$('#error_alert').hide();
 	});
-	$('#edit_announcement_button').click(function(){
+	$('#edit_group_button').click(function(){
 		$.ajax({
 			type: "POST",
-			url: "{{ url_for('announcement.update_announcement',announcement_id = upd_announcement.id ) }}",
+			url: "{{ url_for('group.update_group',group_id = upd_group.id ) }}",
 			data: JSON.stringify({
-				'id'  : '{{upd_announcement.id}}',
-				'name': '' + $('#edit_announcement').val()
+				'id'  : '{{upd_group.id}}',
+				'name': '' + $('#edit_group').val()
 
 			}),
 			contentType: 'application/json;charset=UTF-8',
@@ -48,7 +48,7 @@ $(function(){
 </script>
 	<div class = "col-sm-6 col-sm-offset-3">
 		<div class = "page-header">
-			<h1>Edit announcement</h1>
+			<h1>Edit Group</h1>
 		</div>
 		<div role="alert" id = "error_alert">
 		  <button type="button" class="close" aria-label="Close" id = "error_close_btn"><span aria-hidden="true">&times;</span></button>
@@ -56,14 +56,14 @@ $(function(){
 		</div>
 		<form class="form-horizontal">
 		  <div class="form-group">
-		    <label class="control-label col-sm-2">Announcement:</label>
+		    <label class="control-label col-sm-2">Group:</label>
 		    <div class="col-sm-8">
-		      <input type="text" class="form-control" id="edit_announcement" value = "{{upd_announcement.name}}">
+		      <input type="text" class="form-control" id="edit_group" value = "{{upd_group.name}}">
 		    </div>
 		  </div>
 		  <div class="form-group">
 		    <div class="col-sm-offset-1 col-sm-10">
-		      <p><button type = "button" id = "edit_announcement_button" class = "btn btn-warning "><span class="glyphicon glyphicon-pencil"></span> Update Announcement</button></p>
+		      <p><button type = "button" id = "edit_group_button" class = "btn btn-warning "><span class="glyphicon glyphicon-pencil"></span> Update Group</button></p>
 		    </div>
 		  </div>
 		</form>

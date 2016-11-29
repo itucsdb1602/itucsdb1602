@@ -23,7 +23,7 @@ def add_announcement():
     if request.method == 'GET':
         return render_template('add_announcement.html')
     else:
-        annoObject = Announcement(request.json['name'],1)# sayi control edilecek!!!!!!
+        annoObject = Announcement(request.json['name'],1,1)
         try:
             announcement.service.add_announcement(annoObject)
         except dbapi2.Error as e:
