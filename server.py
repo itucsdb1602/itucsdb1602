@@ -41,14 +41,12 @@ def home_page():
     except dbapi2.Error as e:
         all_tags = None
     try:
-        post_likes = pLikes.service.get_all_post_like(1)
-    except dbapi2.Error as e:
-        post_likes = 0
-    try:
         all_posts = post.service.get_all_posts()
+        for post_id, postObj in all_posts:
+            postObj.post_like = pLikes.service.get_all_post_like(post_id)
     except dbapi2.Error as e:
         all_posts = None
-    return render_template('home.html', all_tags=all_tags, post_likes=post_likes, all_posts = all_posts)
+    return render_template('home.html', all_tags=all_tags, all_posts = all_posts)
 
 @app.route('/hakan')
 def hakan_page():

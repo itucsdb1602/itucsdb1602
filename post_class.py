@@ -11,3 +11,4 @@ class Post:
         self.upd_time = kwargs.get('upd_time',None)
         self.group_id = kwargs.get('group_id',None)
         self.group_name = kwargs.get('group_name', None)
+        self.post_like = kwargs.get('post_like',None)

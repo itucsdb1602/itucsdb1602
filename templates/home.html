@@ -6,32 +6,34 @@ $(function(){
 	$('#create_tag_btn').click(function(){
 		location.href = "{{ url_for('tag.add_tag') }}";
 	});
-	$('#post_1').click(function(){
+	$('[id *= "post_like_"]').click(function(){
+		var id_string = '' + $(this).attr('id').toString();
+		console.log(id_string);
 		$.ajax({
 			type:"POST",
 			url: "{{ url_for('pLikes.add_pLikes') }}",
-			data: JSON.stringify({'post_id':'1','user_id':'1'}),
+			data: JSON.stringify({'post_id': id_string.substring(10),'user_id':'1'}),
 			contentType: 'application/json;charset=UTF-8',
 			success: function(result){
-				var post_like = parseInt($('#like_container').text());
+				var post_like = parseInt($('#like_container_' + id_string.substring(10)).text());
 				console.log(result.status);
 				if(result.status == "OK"){
 					post_like++;
-					$('#like_container').empty();
-					$('#like_container').html(post_like);
+					$('#like_container_' + id_string.substring(10)).empty();
+					$('#like_container_' + id_string.substring(10)).html(post_like);
 				}
 				else{
 					if (result.errcode == 23505){
 						$.ajax({
 							type:"POST",
 							url: "{{ url_for('pLikes.delete_pLike') }}",
-							data: JSON.stringify({'post_id':'1','user_id':'1'}),
+							data: JSON.stringify({'post_id':id_string.substring(10),'user_id':'1'}),
 							contentType: 'application/json;charset=UTF-8',
 							success: function(result){
 								if(result.status == "OK"){
 									post_like--;
-									$('#like_container').empty();
-									$('#like_container').html(post_like);
+									$('#like_container_' + id_string.substring(10)).empty();
+									$('#like_container_' + id_string.substring(10)).html(post_like);
 								}
 							}
 						})
@@ -80,7 +82,7 @@ $(function(){
 				<div class = "well">
 					<p> <a href = "/posts/{{post_id}}">{{post.title}}</a> </p>
 					<p class = "pull-right">
-						<button type = "button" class="btn btn-success btn-sm" id="post_1"><span class="glyphicon glyphicon-thumbs-up"></span> <div id='like_container'>{{post_likes}}</div> </button>
+						<button type = "button" class="btn btn-success btn-sm" id="post_like_{{post_id}}"><span class="glyphicon glyphicon-thumbs-up"></span> <div id='like_container_{{post_id}}'>{{post.post_like}}</div> </button>
 						<button type = "button" class="btn btn-default btn-sm" ><span class="glyphicon glyphicon-comment"></span> 0</button>
 					</p>
 				</div>

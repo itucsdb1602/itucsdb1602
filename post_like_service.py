@@ -11,7 +11,9 @@ class PostLikeService:
             query = """CREATE TABLE pLikes (
                 user_id SERIAL NOT NULL,
                 post_id SERIAL NOT NULL,
-                PRIMARY KEY (user_id,post_id)
+                PRIMARY KEY (user_id,post_id),
+                FOREIGN KEY (post_id) REFERENCES posts (id)
+                    ON DELETE CASCADE
             )"""
             cursor.execute(query)
             connection.commit()
