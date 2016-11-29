@@ -13,6 +13,7 @@ from user_handler import user
 from keywords_handler import keywords
 from post_handler import post
 from group_handler import group
+from comments_handler import comment
 
 app = Flask(__name__)
 app.register_blueprint(tag)
@@ -22,6 +23,7 @@ app.register_blueprint(user)
 app.register_blueprint(keywords)
 app.register_blueprint(post)
 app.register_blueprint(group)
+app.register_blueprint(comment)
 
 
 

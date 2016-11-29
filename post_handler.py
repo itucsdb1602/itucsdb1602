@@ -5,6 +5,7 @@ from flask.globals import current_app, request
 from post_service import PostService
 from post_class import Post
 from tag_service import TagService
+from comments_service import CommentService
 
 post = Blueprint('post',__name__)
 post.service = PostService()
@@ -36,13 +37,22 @@ def add_post():
 @post.route('/posts/<int:post_id>', methods = ['GET', 'POST'])
 def get_post(post_id):
     if request.method == 'GET':
+        commentServiceObject = CommentService()
+        all_comments = commentServiceObject.get_all_comments(post_id)
         postObject = post.service.get_post(post_id)
-        return render_template('post.html',postObject = postObject)
+        return render_template('post.html',postObject = postObject, all_comments = all_comments)
     else:
-        try:
-            post.service.delete_post(post_id)
-        except dbapi2.Error as e:
-            return jsonify({'status' : 'FAIL', 'errcode' : e.pgcode})
+        if request.json['op'] == "delete_post":
+            try:
+                post.service.delete_post(post_id)
+            except dbapi2.Error as e:
+                return jsonify({'status' : 'FAIL', 'errcode' : e.pgcode})
+        elif request.json['op'] == "delete_comment":
+            commentServiceObject = CommentService()
+            try:
+                commentServiceObject.delete_comment(request.json['comment_id'])
+            except dbapi2.Error as e:
+                return jsonify({'status' : 'FAIL', 'errcode' : e.pgcode})
 
         return jsonify({'status' : 'OK', 'errcode' : '00000'})
 

@@ -1,17 +1,61 @@
 {% extends "layout.html" %}
 {% block title %} {{postObject.title}} {% endblock %}
 {% block content %}
+<link href="../static/summernote/summernote.css" rel="stylesheet">
+<script src="../static/summernote/summernote.js"></script>
 <script type="text/javascript">
 $(function(){
+	$('#summernote').summernote();
 	$('#edit_post_{{postObject.id}}').click(function(){
 		location.href = '{{ url_for("post.update_post", post_id = postObject.id) }}';
+	});
+	$('#add_comment_button').click(function(){
+		$.ajax({
+			type: "POST",
+			url: "{{ url_for('comment.add_comment') }}",
+			data: JSON.stringify({
+				'post_id': '{{ postObject.id }}',
+				'comment_text': $('#summernote').summernote('code')
+			}),
+			contentType: 'application/json;charset=UTF-8',
+			success: function(result){
+				console.log(result);
+				if(result.status == "OK"){
+					location.href = '{{ url_for("post.get_post", post_id = postObject.id) }}';
+				}
+			}
+		});
+	});
+	$('[id *= "delete_comment_"]').click(function(){
+		var id_string = $(this).attr('id');
+		$.ajax({
+			type: "POST",
+			url: "{{ url_for('post.get_post', post_id = postObject.id) }}",
+			data: JSON.stringify({
+				'op' 		: 'delete_comment',
+				'comment_id': id_string.substring(15)
+			}),
+			contentType: 'application/json;charset=UTF-8',
+			success: function(result){
+				console.log(result);
+				if(result.status == "OK"){
+					location.href = '{{ url_for("post.get_post", post_id = postObject.id) }}';
+				}
+			}
+		});
+	});
+	$('[id *= "edit_comment_"]').click(function(){
+		var id_string = $(this).attr('id');
+		location.href = "/comments/" + id_string.substring(13);
 	});
 	$('#delete_post_{{postObject.id}}').click(function(){
 		if(confirm("Are you sure?")){
 			$.ajax({
 				type: "POST",
 				url: "{{ url_for('post.get_post', post_id = postObject.id) }}",
-				data: '',
+				data: JSON.stringify({
+					'op' 		: 'delete_post'
+				}),
 				contentType: 'application/json;charset=UTF-8',
 				success: function(result){
 					console.log(result);
@@ -48,6 +92,48 @@ $(function(){
 				<button type = "button" class="btn btn-success btn-sm" id="post_1"><span class="glyphicon glyphicon-thumbs-up"></span> <div id='like_container'>0</div> </button>
 				<button type = "button" class="btn btn-default btn-sm" ><span class="glyphicon glyphicon-comment"></span> 0</button>
 			</p>
+		</div>
+	</div>
+</div>
+{% if all_comments %}
+{% for comment_id, comment in all_comments %}
+<div class = "row" id = "post_{{post_id}}">
+	<div class = "col-sm-3 col-sm-offset-4">
+		<div class = "well">
+			<p>Hakan</p>
+			<p class = "pull-right">
+		    	<button type = "button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-envelope"></span></button>
+		    </p>
+		</div>
+	</div>
+	<div class = "col-sm-5">
+		<div class = "well">
+			<p>{{comment.comment_text|safe}}</p>
+			<p class = "pull-left">
+				<button type = "button" class="btn btn-warning btn-sm" id = "edit_comment_{{comment_id}}" ><span class="glyphicon glyphicon-pencil"></span></button>
+				<button type = "button" class="btn btn-danger btn-sm" id = "delete_comment_{{comment_id}}" ><span class="glyphicon glyphicon-trash"></span></button>
+			</p>
+			<p class = "pull-right">
+				<button type = "button" class="btn btn-success btn-sm" id="post_1"><span class="glyphicon glyphicon-thumbs-up"></span> <div id='like_container'>0</div> </button>
+			</p>
+		</div>
+	</div>
+</div>
+{% endfor %}
+{% endif %}
+<div class = "row" id = "comment_{{comment_id}}">
+	<div class = "col-sm-3">
+		<div class = "well">
+			<p>Hakan</p>
+			<p class = "pull-right">
+		    	<button type = "button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-envelope"></span></button>
+		    </p>
+		</div>
+	</div>
+	<div class = "col-sm-9">
+		<div class = "well">
+			<p><div id = "summernote"></div></p>
+			<p><button type = "button" id = "add_comment_button" class = "btn btn-success "><span class="glyphicon glyphicon-plus"></span> Add Comment</button></p>
 		</div>
 	</div>
 </div>
