@@ -11,13 +11,15 @@ from announcement_handler import announcement
 from post_like_handler import pLikes
 from user_handler import user
 from keywords_handler import keywords
+from post_handler import post
 
 app = Flask(__name__)
 app.register_blueprint(tag)
 app.register_blueprint(announcement)
 app.register_blueprint(pLikes)
-app.register_blueprint(user);
-app.register_blueprint(keywords);
+app.register_blueprint(user)
+app.register_blueprint(keywords)
+app.register_blueprint(post)
 
 
 
@@ -42,7 +44,11 @@ def home_page():
         post_likes = pLikes.service.get_all_post_like(1)
     except dbapi2.Error as e:
         post_likes = 0
-    return render_template('home.html', all_tags=all_tags, post_likes=post_likes)
+    try:
+        all_posts = post.service.get_all_posts()
+    except dbapi2.Error as e:
+        all_posts = None
+    return render_template('home.html', all_tags=all_tags, post_likes=post_likes, all_posts = all_posts)
 
 @app.route('/hakan')
 def hakan_page():

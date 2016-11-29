@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block title %} {{postObject.title}} {% endblock %}
+{% block content %}
+<script type="text/javascript">
+$(function(){
+})
+</script>
+<div class = "row" id = "post_{{post_id}}">
+	<div class = "col-sm-3">
+		<div class = "well">
+			<p>Hakan</p>
+			<p><button type = "button" class="btn btn-danger btn-sm">{{postObject.tag_name}}</button></p>
+			<p class = "pull-right">
+		    	<button type = "button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-envelope"></span></button>
+		    </p>
+		</div>
+	</div>
+	<div class = "col-sm-9">
+		<div class = "well">
+			<div class = "page-header">
+					<h3>{{postObject.title}}</h3>
+			</div>
+			<p>{{postObject.post_text|safe}}</p>
+			<p class = "pull-right">
+				<button type = "button" class="btn btn-success btn-sm" id="post_1"><span class="glyphicon glyphicon-thumbs-up"></span> <div id='like_container'>0</div> </button>
+				<button type = "button" class="btn btn-default btn-sm" ><span class="glyphicon glyphicon-comment"></span> 0</button>
+			</p>
+		</div>
+	</div>
+</div>
+{% endblock %}
+{% block footer %} <p>postIT<p> {% endblock %}
