@@ -52,6 +52,14 @@ def home_page():
         all_posts = None
     return render_template('home.html', all_tags=all_tags, all_posts = all_posts)
 
+@app.route('/groups')
+def group_page():
+    return render_template('groups.html')
+@app.route('/announcements')
+def announcement_page():
+    return render_template('announcements.html')
+
+
 @app.route('/hakan')
 def hakan_page():
     return render_template('hakan.html')
@@ -59,7 +67,6 @@ def hakan_page():
 @app.route('/gokturk')
 def gokturk_page():
     return render_template('gokturk.html')
-
 @app.route('/bilal')
 def bilal_page():
     return render_template('bilal.html')
