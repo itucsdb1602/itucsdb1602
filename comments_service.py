@@ -42,6 +42,16 @@ class CommentService:
                         for key,comment_text, crt_id, crt_time, upd_id, upd_time in cursor]
             return all_comments
 
+    def get_comment_counter(self,post_id):
+        with dbapi2.connect(current_app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = """SELECT COUNT(id)
+                            FROM comments WHERE post_id = %s
+                                """
+            cursor.execute(query,(post_id,))
+            comment_counter = cursor.fetchone()[0];
+            return comment_counter
+
     def get_comment(self,comment_id):
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()

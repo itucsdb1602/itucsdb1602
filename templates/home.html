@@ -9,6 +9,10 @@ $(function(){
 	$('#create_post_btn').click(function(){
 		location.href = "{{ url_for('post.add_post') }}";
 	});
+	$('[id *= "comments_"]').click(function(){
+		//var id_string = '' + $(this).attr('id').toString();
+		location.href = "/posts/"+ $(this).attr('id').substring(9);
+	});
 	$('[id *= "post_like_"]').click(function(){
 		var id_string = '' + $(this).attr('id').toString();
 		console.log(id_string);
@@ -89,7 +93,7 @@ $(function(){
 					<p> <a href = "/posts/{{post_id}}">{{post.title}}</a> </p>
 					<p class = "pull-right">
 						<button type = "button" class="btn btn-success btn-sm" id="post_like_{{post_id}}"><span class="glyphicon glyphicon-thumbs-up"></span> <div id='like_container_{{post_id}}'>{{post.post_like}}</div> </button>
-						<button type = "button" class="btn btn-default btn-sm" ><span class="glyphicon glyphicon-comment"></span> 0</button>
+						<button type = "button" class="btn btn-default btn-sm" id ="comments_{{post_id}}" ><span class="glyphicon glyphicon-comment"></span> <div id = "comment_container_{{post_id}}">{{post.comment_counter}}</button>
 					</p>
 				</div>
 			</div>

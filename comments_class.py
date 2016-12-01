@@ -1,4 +1,5 @@
 class Comment:
+    #comments are connected its related post that is why __init__ function takes post_id as parameter from posts automatically
     def __init__(self,comment_text,post_id,*args,**kwargs):
         self.id = kwargs.get('id',None)
         self.comment_text = comment_text
