@@ -3,7 +3,7 @@ import json
 from flask import Blueprint, render_template, jsonify
 from flask.globals import current_app, request
 from keywords_service import keywordsService
-from keywords_class import keywords
+from keywords_class import Keywords
 
 keywords = Blueprint('keywords',__name__)
 keywords.service = keywordsService()
@@ -23,7 +23,7 @@ def add_keywords():
     if request.method == 'GET':
         return render_template('add_keywords.html')
     else:
-        keywordsObject = keywords(request.json['name'])
+        keywordsObject = Keywords(request.json['name'])
         try:
             keywords.service.add_keywords(keywordsObject)
         except dbapi2.Error as e:

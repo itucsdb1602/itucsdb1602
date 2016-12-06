@@ -1,6 +1,6 @@
 import psycopg2 as dbapi2
 
-from keywords_class import keywords
+from keywords_class import Keywords
 from flask.globals import current_app, request
 
 
