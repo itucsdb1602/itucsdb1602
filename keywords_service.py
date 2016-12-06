@@ -3,8 +3,6 @@ import psycopg2 as dbapi2
 from keywords_class import Keywords
 from flask.globals import current_app, request
 
-
-
 class keywordsService:
     def init_keywords_tbl(self):
         with dbapi2.connect(current_app.config['dsn']) as connection:
