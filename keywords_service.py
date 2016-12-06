@@ -14,11 +14,11 @@ class keywordsService:
             )"""
             cursor.execute(query)
             connection.commit()
-    def add_keywords(self,keywords):
+    def add_keywords(self,Keywords):
          with dbapi2.connect(current_app.config['dsn']) as connection:
              cursor = connection.cursor()
              query = "INSERT INTO keywordss (name) VALUES (%s)"
-             cursor.execute(query,(keywords.name,))
+             cursor.execute(query,(Keywords.name,))
              connection.commit()
 
     def get_all_keywordss(self):
@@ -26,7 +26,7 @@ class keywordsService:
             cursor = connection.cursor()
             query = "SELECT * FROM keywordss"
             cursor.execute(query)
-            all_keywordss = [(key, keywords(name))
+            all_keywordss = [(key, Keywords(name))
                         for key,name in cursor]
             return all_keywordss
     def get_keywordss_by_name(self,keywords_name):
@@ -34,7 +34,7 @@ class keywordsService:
             cursor = connection.cursor()
             query = "SELECT * FROM keywordss WHERE name ILIKE %s"
             cursor.execute(query,("%" + keywords_name + "%",))
-            keywords_search_result = [keywords(name,key).json_serialize()
+            keywords_search_result = [Keywords(name,key).json_serialize()
                         for key,name in cursor]
             return keywords_search_result
     def get_keywords(self,keywords_id):
@@ -43,7 +43,7 @@ class keywordsService:
             query = "SELECT * FROM keywordss WHERE id = %s"
             cursor.execute(query,(keywords_id,))
             key,title = cursor.fetchone()
-            return keywords(title,key)
+            return Keywords(title,key)
 
     def update_keywords(self,keywords_id,input_name):
         with dbapi2.connect(current_app.config['dsn']) as connection:
