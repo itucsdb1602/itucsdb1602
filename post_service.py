@@ -28,9 +28,10 @@ class PostService:
     def add_post(self,post):
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "INSERT INTO posts (title, post_text, tag_id, crt_id, crt_time ) VALUES (%s,%s,%s,1,CURRENT_TIMESTAMP)"
+            query = "INSERT INTO posts (title, post_text, tag_id, crt_id, crt_time ) VALUES (%s,%s,%s,1,CURRENT_TIMESTAMP) RETURNING id"
             cursor.execute(query,(post.title,post.post_text,post.tag_id))
             connection.commit()
+            return cursor.fetchone()[0];
 
     def get_all_posts(self):
         with dbapi2.connect(current_app.config['dsn']) as connection:

@@ -1,27 +1,18 @@
 {% extends "layout.html" %}
 {% block title %} Hakan's Page {% endblock %}
 {% block content %}
-<link href="../static/summernote/summernote.css" rel="stylesheet">
-<script src="../static/summernote/summernote.js"></script>
+<link href="../../static/summernote/summernote.css" rel="stylesheet">
+<script src="../../static/summernote/summernote.js"></script>
 <script type="text/javascript">
-function popAlertDiv(status, errcode){
+function popErrorDiv(errmsg){
 	$('#error_alert').hide();
 	$('#error_container').empty();
-	if (status == "OK"){
 
-		$('#error_alert').removeClass().addClass('alert alert-success alert-dismissible');
-		$('#error_container').append('<strong>Success!</strong> Data is added successfully!');
-		$('#error_alert').show();
+	$('#error_alert').removeClass().addClass('alert alert-danger alert-dismissible');
+	for(var i = 0; i < errmsg.length; i++){
+		$('#error_container').append('<strong>Error!</strong> ' + errmsg[i] + "<br>");
 	}
-	else{
-		$('#error_alert').removeClass().addClass('alert alert-danger alert-dismissible');
-		if(errcode == 23505){
-			$('#error_container').append('<strong>Error!</strong> Data already exist!');
-		}
-		else{
-			$('#error_container').append('<strong>Error!</strong> Some error occured. Please contact Admin!');
-		}
-	}
+
 	$('#error_alert').show();
 };
 $(function(){
@@ -45,7 +36,12 @@ $(function(){
 			contentType: 'application/json;charset=UTF-8',
 			success: function(result){
 				console.log(result);
-				popAlertDiv(result.status, result.errcode);
+				if(result.status == "OK"){
+					location.href = '/posts/' + result.last_row_id;
+				}
+				else{
+					popErrorDiv(result.errmsg);
+				}
 			}
 		});
 	})

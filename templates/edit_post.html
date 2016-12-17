@@ -1,25 +1,21 @@
 {% extends "layout.html" %}
 {% block title %} Hakan's Page {% endblock %}
 {% block content %}
-<link href="../static/summernote/summernote.css" rel="stylesheet">
-<script src="../static/summernote/summernote.js"></script>
+<link href="../../static/summernote/summernote.css" rel="stylesheet">
+<script src="../../static/summernote/summernote.js"></script>
 <script type="text/javascript">
-function popAlertDiv(status, errcode){
+function popAlertDiv(status, errmsg){
 	$('#error_alert').hide();
 	$('#error_container').empty();
 	if (status == "OK"){
 
 		$('#error_alert').removeClass().addClass('alert alert-success alert-dismissible');
 		$('#error_container').append('<strong>Success!</strong> Data is edited successfully!');
-		$('#error_alert').show();
 	}
 	else{
 		$('#error_alert').removeClass().addClass('alert alert-danger alert-dismissible');
-		if(errcode == 23505){
-			$('#error_container').append('<strong>Error!</strong> Data already exist!');
-		}
-		else{
-			$('#error_container').append('<strong>Error!</strong> Some error occured. Please contact Admin!');
+		for(var i = 0; i < errmsg.length; i++){
+			$('#error_container').append('<strong>Error!</strong> ' + errmsg[i] + "<br>");
 		}
 	}
 	$('#error_alert').show();
@@ -47,7 +43,7 @@ $(function(){
 			contentType: 'application/json;charset=UTF-8',
 			success: function(result){
 				console.log(result);
-				popAlertDiv(result.status, result.errcode);
+				popAlertDiv(result.status, result.errmsg);
 			}
 		});
 	})

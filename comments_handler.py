@@ -28,8 +28,14 @@ def init_comment_tbl():
 @comment.route('/comments/add', methods = ['GET', 'POST'])
 def add_comment():
     if request.method == "POST":
+        errList = [];
         if getHTMLText(request.json['comment_text']) == "":
-            return jsonify({'status' : 'FAIL', 'errcode' : '00001'})
+            errList.append("Comment Content cannot be empty!")
+        if len(errList) != 0:
+            return jsonify({
+                'status' : 'FAIL',
+                'errcode': errList
+                })
         commentObject = Comment(request.json['comment_text'], request.json['post_id'])
         try:
             comment.service.add_comment(commentObject)
@@ -37,7 +43,6 @@ def add_comment():
             return jsonify({'status' : 'FAIL', 'errcode' : e.pgcode})
 
         return jsonify({'status' : 'OK', 'errcode' : '00000'})
-
 @comment.route('/comments/<int:comment_id>', methods = ['GET', 'POST'])
 def get_comment(comment_id):
     if request.method == 'GET':

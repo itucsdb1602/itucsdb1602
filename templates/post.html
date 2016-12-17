@@ -1,10 +1,25 @@
 {% extends "layout.html" %}
 {% block title %} {{postObject.title}} {% endblock %}
 {% block content %}
-<link href="../static/summernote/summernote.css" rel="stylesheet">
-<script src="../static/summernote/summernote.js"></script>
+<link href="../../static/summernote/summernote.css" rel="stylesheet">
+<script src="../../static/summernote/summernote.js"></script>
 <script type="text/javascript">
+function popErrorDiv(errmsg){
+	$('#error_alert').hide();
+	$('#error_container').empty();
+
+	$('#error_alert').removeClass().addClass('alert alert-danger alert-dismissible');
+	for(var i = 0; i < errmsg.length; i++){
+		$('#error_container').append('<strong>Error!</strong> ' + errmsg[i] + "<br>");
+	}
+
+	$('#error_alert').show();
+};
 $(function(){
+	$('#error_alert').hide();
+	$('#error_close_btn').click(function(){
+		$('#error_alert').hide();
+	});
 	$('#summernote').summernote();
 	$('#edit_post_{{postObject.id}}').click(function(){
 		location.href = '{{ url_for("post.update_post", post_id = postObject.id) }}';
@@ -22,6 +37,9 @@ $(function(){
 				console.log(result);
 				if(result.status == "OK"){
 					location.href = '{{ url_for("post.get_post", post_id = postObject.id) }}';
+				}
+				else{
+					popErrorDiv(result.errmsg);
 				}
 			}
 		});
@@ -52,9 +70,9 @@ $(function(){
 		if(confirm("Are you sure?")){
 			$.ajax({
 				type: "POST",
-				url: "{{ url_for('post.get_post', post_id = postObject.id) }}",
+				url: "{{ url_for('post.delete_post', post_id = postObject.id) }}",
 				data: JSON.stringify({
-					'op' 		: 'delete_post'
+					'post_id' 		: '{{postObject.id}}'
 				}),
 				contentType: 'application/json;charset=UTF-8',
 				success: function(result){
@@ -122,6 +140,10 @@ $(function(){
 {% endfor %}
 {% endif %}
 <div class = "row" id = "comment_{{comment_id}}">
+	<div role="alert" id = "error_alert">
+		  <button type="button" class="close" aria-label="Close" id = "error_close_btn"><span aria-hidden="true">&times;</span></button>
+		  <div id = "error_container"></div>
+	</div>
 	<div class = "col-sm-3">
 		<div class = "well">
 			<p>Hakan</p>
