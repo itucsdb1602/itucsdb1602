@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block title %} Users {% endblock %}
+{% block content %}
+<link rel="stylesheet" href="../static/css/login.css">
+<link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<div class="login-form-1" style="padding:50px 0">
+	<a href = "/users/init">Create users' tables </a> |
+	<a href = "/users/destroy">Destroy users' tables </a>
+
+	<div class="logo">login</div>
+	<!-- Main Form -->
+	<div class="col-sm-4-centered well" >
+		{% if error %}
+		<div class="alert alert-danger alert-dismissible" role="alert">
+		  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		  <strong><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span></strong> {{error}}
+		</div>
+		{% endif %}
+		<form id="login-form" class="text-left" method = "POST">
+			<div class="login-form-main-message"></div>
+			<div class="main-login-form">
+				<div class="login-group">
+					<div class="form-group">
+						<label for="lg_username" class="sr-only">Username</label>
+						<input type="text" maxlength="40" class="form-control" id="lg_username" name="lg_username" placeholder="username" required autofocus>
+					</div>
+					<div class="form-group">
+						<label for="lg_password" class="sr-only">Password</label>
+						<input type="password" minlength="8" maxlength="40" class="form-control" id="lg_password" name="lg_password" placeholder="password" required autofocus>
+					</div>
+					<div class="form-group login-group-checkbox">
+						<input type="checkbox" id="lg_remember" name="lg_remember">
+						<label for="lg_remember">remember</label>
+					</div>
+				</div>
+				<button type="submit" class="login-button"><i class="glyphicon glyphicon-menu-right"></i></button>
+			</div>
+			<div class="etc-login-form">
+				<p>new user? <a href="/register">create new account</a></p>
+			</div>
+		</form>
+	</div>
+	<!-- end:Main Form -->
+</div>
+<script> $("#reg_form").validate();</script>
+
+{% endblock %}
+{% block footer %} <p>Özgün Kıvrakdal<p> {% endblock %}
