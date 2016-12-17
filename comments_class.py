@@ -9,3 +9,4 @@ class Comment:
         self.upd_id = kwargs.get('upd_id',None)
         self.upd_time = kwargs.get('upd_time',None)
         self.comment_like = kwargs.get('comment_like',None)
+        self.crt_username = kwargs.get('crt_username',None)

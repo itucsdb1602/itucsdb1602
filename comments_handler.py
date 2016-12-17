@@ -1,7 +1,7 @@
 import re
 import psycopg2 as dbapi2
 import json
-from flask import Blueprint, render_template, jsonify
+from flask import Blueprint, render_template, jsonify, session
 from flask.globals import current_app, request
 
 from comments_service import CommentService
@@ -36,7 +36,7 @@ def add_comment():
                 'status' : 'FAIL',
                 'errcode': errList
                 })
-        commentObject = Comment(request.json['comment_text'], request.json['post_id'])
+        commentObject = Comment(request.json['comment_text'], request.json['post_id'],crt_id = session["user_id"])
         try:
             comment.service.add_comment(commentObject)
         except dbapi2.Error as e:

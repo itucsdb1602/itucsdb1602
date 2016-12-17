@@ -26,20 +26,21 @@ class CommentService:
     def add_comment(self,comment):
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "INSERT INTO comments ( comment_text, post_id, crt_id, crt_time ) VALUES (%s,%s,1,CURRENT_TIMESTAMP)"
-            cursor.execute(query,(comment.comment_text,comment.post_id))
+            query = "INSERT INTO comments ( comment_text, post_id, crt_id, crt_time ) VALUES (%s,%s,%s,CURRENT_TIMESTAMP)"
+            cursor.execute(query,(comment.comment_text,comment.post_id,comment.crt_id))
             connection.commit()
 
     def get_all_comments(self,post_id):
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
             query = """SELECT comments.id, comments.comment_text , comments.crt_id, comments.crt_time,
-                        comments.upd_id, comments.upd_time
-                            FROM comments WHERE post_id = %s
+                        comments.upd_id, comments.upd_time, users.username AS crt_username FROM comments
+                            LEFT JOIN users ON comments.crt_id = users.id
+                            WHERE post_id = %s
                                 """
             cursor.execute(query,(post_id,))
-            all_comments = [(key, Comment(comment_text, post_id , crt_id = crt_id, crt_time = crt_time, upd_id = upd_id, upd_time = upd_time))
-                        for key,comment_text, crt_id, crt_time, upd_id, upd_time in cursor]
+            all_comments = [(key, Comment(comment_text, post_id , crt_id = crt_id, crt_time = crt_time, upd_id = upd_id, upd_time = upd_time, crt_username = crt_username))
+                        for key,comment_text, crt_id, crt_time, upd_id, upd_time, crt_username in cursor]
             return all_comments
 
     def get_comment_counter(self,post_id):

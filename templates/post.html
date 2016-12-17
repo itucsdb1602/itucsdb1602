@@ -152,7 +152,7 @@ $(function(){
 <div class = "row" id = "post_{{post_id}}">
 	<div class = "col-sm-3 col-sm-offset-4">
 		<div class = "well">
-			<p>Hakan</p>
+			<p>{{comment.crt_username}}</p>
 			<p class = "pull-right">
 		    	<button type = "button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-envelope"></span></button>
 		    </p>
@@ -162,8 +162,10 @@ $(function(){
 		<div class = "well">
 			<p>{{comment.comment_text|safe}}</p>
 			<p class = "pull-left">
+				{% if comment.crt_username == current_user.username %}
 				<button type = "button" class="btn btn-warning btn-sm" id = "edit_comment_{{comment_id}}" ><span class="glyphicon glyphicon-pencil"></span></button>
 				<button type = "button" class="btn btn-danger btn-sm" id = "delete_comment_{{comment_id}}" ><span class="glyphicon glyphicon-trash"></span></button>
+				{% endif %}
 			</p>
 			<p class = "pull-right">
 				<button type = "button" class="btn btn-success btn-sm" id="comment_like_{{comment_id}}"><span class="glyphicon glyphicon-thumbs-up"></span> <div id='clike_container_{{comment_id}}'>{{comment.comment_like}}</div> </button>
