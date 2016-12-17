@@ -6,20 +6,32 @@ import psycopg2 as dbapi2
 
 from flask import Flask
 from flask import render_template
+import flask_login
 from tag_handler import tag
 from announcement_handler import announcement
 from post_like_handler import pLikes
 from user_handler import user
+from user_block_handler import user_block
+from user_friend_handler import user_friend
 from keywords_handler import keywords
 from post_handler import post
 from group_handler import group
 from comments_handler import comment
 
 app = Flask(__name__)
+
+app.secret_key = '7e6e814998ab3de2b63401a58063c79d92865d79'
+login_manager = flask_login.LoginManager()
+login_manager.init_app(app)
+login_manager.user_loader(user.service.get_user_by_id)
+login_manager.login_view = "user.login"
+
 app.register_blueprint(tag)
 app.register_blueprint(announcement)
 app.register_blueprint(pLikes)
 app.register_blueprint(user)
+app.register_blueprint(user_block)
+app.register_blueprint(user_friend)
 app.register_blueprint(keywords)
 app.register_blueprint(post)
 app.register_blueprint(group)
@@ -71,9 +83,6 @@ def gokturk_page():
 @app.route('/bilal')
 def bilal_page():
     return render_template('bilal.html')
-@app.route('/ozgun')
-def ozgun_page():
-    return render_template('ozgun.html')
 @app.route('/samet')
 def samet_page():
     return render_template('samet.html')
