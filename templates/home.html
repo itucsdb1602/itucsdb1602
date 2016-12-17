@@ -19,7 +19,7 @@ $(function(){
 		$.ajax({
 			type:"POST",
 			url: "{{ url_for('pLikes.add_pLikes') }}",
-			data: JSON.stringify({'post_id': id_string.substring(10),'user_id':'1'}),
+			data: JSON.stringify({'post_id': id_string.substring(10),'user_id':'{{session["user_id"]}}'}),
 			contentType: 'application/json;charset=UTF-8',
 			success: function(result){
 				var post_like = parseInt($('#like_container_' + id_string.substring(10)).text());

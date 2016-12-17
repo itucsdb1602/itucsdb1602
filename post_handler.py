@@ -7,6 +7,7 @@ from post_service import PostService
 from post_class import Post
 from tag_service import TagService
 from comments_service import CommentService
+from post_like_service import PostLikeService
 
 post = Blueprint('post',__name__)
 post.service = PostService()
@@ -75,8 +76,11 @@ def add_post():
 def get_post(post_id):
     if request.method == 'GET':
         commentServiceObject = CommentService()
+        postLikeServiceObject = PostLikeService()
         all_comments = commentServiceObject.get_all_comments(post_id)
         postObject = post.service.get_post(post_id)
+        postObject.post_like = postLikeServiceObject.get_all_post_like(post_id)
+        postObject.comment_counter = commentServiceObject.get_comment_counter(post_id)
         return render_template('post.html',postObject = postObject, all_comments = all_comments)
     else:
         if request.json['op'] == "delete_comment":
