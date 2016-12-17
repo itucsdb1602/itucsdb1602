@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+{% block title %} Home {% endblock %}
+{% block content %}
+<script type="text/javascript">
+$(function(){
+	$('#create_tag_btn').click(function(){
+		location.href = "{{ url_for('tag.add_tag') }}";
+	});
+	$('#create_post_btn').click(function(){
+		location.href = "{{ url_for('post.add_post') }}";
+	});
+	$('[id *= "comments_"]').click(function(){
+		//var id_string = '' + $(this).attr('id').toString();
+		location.href = "/posts/"+ $(this).attr('id').substring(9);
+	});
+	$('[id *= "post_like_"]').click(function(){
+		var id_string = '' + $(this).attr('id').toString();
+		console.log(id_string);
+		$.ajax({
+			type:"POST",
+			url: "{{ url_for('pLikes.add_pLikes') }}",
+			data: JSON.stringify({'post_id': id_string.substring(10),'user_id':'1'}),
+			contentType: 'application/json;charset=UTF-8',
+			success: function(result){
+				var post_like = parseInt($('#like_container_' + id_string.substring(10)).text());
+				console.log(result.status);
+				if(result.status == "OK"){
+					post_like++;
+					$('#like_container_' + id_string.substring(10)).empty();
+					$('#like_container_' + id_string.substring(10)).html(post_like);
+				}
+				else{
+					if (result.errcode == 23505){
+						$.ajax({
+							type:"POST",
+							url: "{{ url_for('pLikes.delete_pLike') }}",
+							data: JSON.stringify({'post_id':id_string.substring(10),'user_id':'1'}),
+							contentType: 'application/json;charset=UTF-8',
+							success: function(result){
+								if(result.status == "OK"){
+									post_like--;
+									$('#like_container_' + id_string.substring(10)).empty();
+									$('#like_container_' + id_string.substring(10)).html(post_like);
+								}
+							}
+						})
+					}
+				}
+			}
+		})
+	})
+});
+</script>
+	<div class="col-sm-3 well">
+		<div class="well">
+			<p>Welcome to postIT!</p>
+		</div>
+		<div class="alert alert-success fade in">
+	        <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+	        <p><strong>Hey!</strong></p>
+	        <a href="/announcements">We have announcement for you!</a>
+      	</div>
+      	<div class="alert alert-success fade in">
+	        <p><strong><a href="/groups">Search groups!</a></strong></p>
+      	</div>
+	</div>
+	<div class = "col-sm-9">
+		{% if all_posts %}
+		{% for post_id, post in all_posts %}
+		<div class = "row">
+			<div class = "col-sm-3">
+				<div class = "well">
+					<p>Hakan</p>
+					<p><button type = "button" class="btn btn-danger btn-sm">{{post.tag_name}}</button></p>
+					<p class = "pull-right">
+				    	<button type = "button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-envelope"></span></button>
+				    </p>
+				</div>
+			</div>
+			<div class = "col-sm-6">
+				<div class = "well">
+					<p> <a href = "/posts/{{post_id}}">{{post.title}}</a> </p>
+					<p class = "pull-right">
+						<button type = "button" class="btn btn-success btn-sm" id="post_like_{{post_id}}"><span class="glyphicon glyphicon-thumbs-up"></span> <div id='like_container_{{post_id}}'>{{post.post_like}}</div> </button>
+						<button type = "button" class="btn btn-default btn-sm" id ="comments_{{post_id}}" ><span class="glyphicon glyphicon-comment"></span> <div id = "comment_container_{{post_id}}">{{post.comment_counter}}</button>
+					</p>
+				</div>
+			</div>
+
+		</div>
+		{% endfor %}
+		{% endif %}
+	</div>
+{% endblock %}
+{% block footer %} <p>postIT Home Page<p> {% endblock %}
