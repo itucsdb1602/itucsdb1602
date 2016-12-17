@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+{% block title %} Users {% endblock %}
+{% block content %}
+<link rel="stylesheet" href="../static/css/login.css">
+<link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<!-- REGISTRATION FORM -->
+<div class="text-center" style="padding:50px 0">
+	<div class="logo">Settings</div>
+	<!-- Main Form -->
+	<div class="login-form-1" >
+		<form id="reg_form" role = "form" action ="" name = "reg_form" id = "reg_form" method = "POST" class="text-left">
+			{% if error %}
+			<div class="alert alert-danger alert-dismissible" role="alert">
+			  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			  <strong><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span></strong> {{error}}
+			</div>
+			{% endif %}
+			<div class="login-form-main-message"></div>
+			<div class="main-login-form">
+				<div class="login-group">
+					<div class="form-group">
+						<label for="reg_username" class="sr-only">Email address</label>
+						<input type="text" maxlength="40" class="form-control" id="reg_username" name="reg_username" value="{{ current_user.username }}" required autofocus/>
+					</div>
+					<div class="form-group">
+						<label for="reg_password" class="sr-only">Password</label>
+						<input type="password" minlength="8" maxlength="40" class="form-control" id="reg_password" name="reg_password" placeholder="(password unchanged)" autofocus/>
+					</div>
+					<div class="form-group">
+						<label for="reg_password_confirm" class="sr-only">Password Confirm</label>
+						<input type="password" minlength="8" maxlength="40" class="form-control" id="reg_password_confirm" name="reg_password_confirm" placeholder="confirm if you change password" autofocus/>
+					</div>
+
+					<div class="form-group">
+						<label for="reg_email" class="sr-only">Email</label>
+						<input type="email" minlength="5" maxlength="40" class="form-control" id="reg_email" name="reg_email" value="{{ current_user.email}}" required autofocus/>
+					</div>
+					<div class="form-group">
+						<label for="reg_fullname" class="sr-only">Full Name</label>
+						<input type="text" maxlength="40" class="form-control" id="reg_fullname" name="reg_fullname" value="{{ current_user.fullname }}" required autofocus/>
+					</div>
+
+					<div class="form-group login-group-checkbox">
+						<input type="radio" class="" name="reg_gender" id="male" value="male" {% if current_user.gender == "male" %} checked {% endif %} required autofocus/>
+						<label for="male">male</label>
+
+						<input type="radio" class="" name="reg_gender" id="female" value="female" {% if current_user.gender == "female" %} checked {% endif %} required autofocus/>
+						<label for="female">female</label>
+					</div>
+
+				</div>
+				<button type="submit" class="login-button" ><i class="glyphicon glyphicon-menu-right"></i></button>
+				<a href = "/delete">Delete my account</a>
+			</div>
+		</form>
+	</div>
+	<!-- end:Main Form -->
+</div>
+<script> $("#reg_form").validate();</script>
+
+{% endblock %}
+{% block footer %} <p>Özgün Kıvrakdal<p> {% endblock %}
