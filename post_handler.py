@@ -2,11 +2,14 @@ import psycopg2 as dbapi2
 import json
 import re
 from flask import Blueprint, render_template, jsonify, redirect, url_for
-from flask.globals import current_app, request
+from flask.globals import current_app, request, session
 from post_service import PostService
 from post_class import Post
 from tag_service import TagService
 from comments_service import CommentService
+from post_like_service import PostLikeService
+from comment_like_service import CommentLikeService
+from user_service import UserService
 
 post = Blueprint('post',__name__)
 post.service = PostService()
@@ -52,7 +55,7 @@ def add_post():
                 'errmsg': errList
                 })
 
-        postObject = Post(request.json['post_text'], request.json['tag_id'], request.json['title'])
+        postObject = Post(request.json['post_text'], request.json['tag_id'], request.json['title'],crt_username = request.json['user_id'])
         try:
             lastRowID = post.service.add_post(postObject)
         except dbapi2.Error as e:
@@ -75,8 +78,14 @@ def add_post():
 def get_post(post_id):
     if request.method == 'GET':
         commentServiceObject = CommentService()
+        postLikeServiceObject = PostLikeService()
+        commentLikeServiceObject = CommentLikeService()
         all_comments = commentServiceObject.get_all_comments(post_id)
+        for comment_id, commentObj in all_comments:
+            commentObj.comment_like = commentLikeServiceObject.get_all_comment_like(comment_id)
         postObject = post.service.get_post(post_id)
+        postObject.post_like = postLikeServiceObject.get_all_post_like(post_id)
+        postObject.comment_counter = commentServiceObject.get_comment_counter(post_id)
         return render_template('post.html',postObject = postObject, all_comments = all_comments)
     else:
         if request.json['op'] == "delete_comment":

@@ -30,7 +30,8 @@ $(function(){
 			data: JSON.stringify({
 									'title': $('#add_post_title').val(),
 									'post_text': $('#summernote').summernote('code'),
-									'tag_id' : $('#tag_select').val()
+									'tag_id' : $('#tag_select').val(),
+									'user_id': '{{session["user_id"]}}'
 
 								}),
 			contentType: 'application/json;charset=UTF-8',

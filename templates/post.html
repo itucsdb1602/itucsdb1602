@@ -84,12 +84,46 @@ $(function(){
 			});
 		}
 	});
+	$('[id *= "comment_like_"]').click(function(){
+		var id_string = '' + $(this).attr('id').toString();
+		$.ajax({
+			type:"POST",
+			url: "{{ url_for('comment_like.add_comment_like') }}",
+			data: JSON.stringify({'comment_id': id_string.substring(13),'user_id':'{{session["user_id"]}}'}),
+			contentType: 'application/json;charset=UTF-8',
+			success: function(result){
+				var comment_like = parseInt($('#clike_container_' + id_string.substring(13)).text());
+				if(result.status == "OK"){
+					comment_like++;
+					$('#clike_container_' + id_string.substring(13)).empty();
+					$('#clike_container_' + id_string.substring(13)).html(comment_like);
+				}
+				else{
+					if (result.errcode == 23505){
+						$.ajax({
+							type:"POST",
+							url: "{{ url_for('comment_like.delete_comment_like') }}",
+							data: JSON.stringify({'comment_id':id_string.substring(13),'user_id':'{{session["user_id"]}}'}),
+							contentType: 'application/json;charset=UTF-8',
+							success: function(result){
+								if(result.status == "OK"){
+									comment_like--;
+									$('#clike_container_' + id_string.substring(13)).empty();
+									$('#clike_container_' + id_string.substring(13)).html(comment_like);
+								}
+							}
+						})
+					}
+				}
+			}
+		})
+	});
 })
 </script>
 <div class = "row" id = "post_{{post_id}}">
 	<div class = "col-sm-3">
 		<div class = "well">
-			<p>Hakan</p>
+			<p>{{postObject.crt_username}}</p>
 			<p><button type = "button" class="btn btn-danger btn-sm">{{postObject.tag_name}}</button></p>
 			<p class = "pull-right">
 		    	<button type = "button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-envelope"></span></button>
@@ -107,8 +141,8 @@ $(function(){
 				<button type = "button" class="btn btn-danger btn-sm" id = "delete_post_{{postObject.id}}" ><span class="glyphicon glyphicon-trash"></span></button>
 			</p>
 			<p class = "pull-right">
-				<button type = "button" class="btn btn-success btn-sm" id="post_1"><span class="glyphicon glyphicon-thumbs-up"></span> <div id='like_container'>0</div> </button>
-				<button type = "button" class="btn btn-default btn-sm" ><span class="glyphicon glyphicon-comment"></span> 0</button>
+				<button type = "button" class="btn btn-success btn-sm" id="post_1"><span class="glyphicon glyphicon-thumbs-up"></span> <div id='like_container'>{{postObject.post_like}}</div> </button>
+				<button type = "button" class="btn btn-default btn-sm" ><span class="glyphicon glyphicon-comment"></span><div id = 'comment_counter_container'>{{postObject.comment_counter}}</div></button>
 			</p>
 		</div>
 	</div>
@@ -132,21 +166,22 @@ $(function(){
 				<button type = "button" class="btn btn-danger btn-sm" id = "delete_comment_{{comment_id}}" ><span class="glyphicon glyphicon-trash"></span></button>
 			</p>
 			<p class = "pull-right">
-				<button type = "button" class="btn btn-success btn-sm" id="post_1"><span class="glyphicon glyphicon-thumbs-up"></span> <div id='like_container'>0</div> </button>
+				<button type = "button" class="btn btn-success btn-sm" id="comment_like_{{comment_id}}"><span class="glyphicon glyphicon-thumbs-up"></span> <div id='clike_container_{{comment_id}}'>{{comment.comment_like}}</div> </button>
 			</p>
 		</div>
 	</div>
 </div>
 {% endfor %}
 {% endif %}
-<div class = "row" id = "comment_{{comment_id}}">
+{% if session['user_id'] %}
+<div class = "row">
 	<div role="alert" id = "error_alert">
 		  <button type="button" class="close" aria-label="Close" id = "error_close_btn"><span aria-hidden="true">&times;</span></button>
 		  <div id = "error_container"></div>
 	</div>
 	<div class = "col-sm-3">
 		<div class = "well">
-			<p>Hakan</p>
+			<p>{{current_user.username}}</p>
 			<p class = "pull-right">
 		    	<button type = "button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-envelope"></span></button>
 		    </p>
@@ -159,5 +194,6 @@ $(function(){
 		</div>
 	</div>
 </div>
+{% endif %}
 {% endblock %}
 {% block footer %} <p>postIT<p> {% endblock %}

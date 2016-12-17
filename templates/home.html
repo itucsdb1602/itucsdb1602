@@ -19,7 +19,7 @@ $(function(){
 		$.ajax({
 			type:"POST",
 			url: "{{ url_for('pLikes.add_pLikes') }}",
-			data: JSON.stringify({'post_id': id_string.substring(10),'user_id':'1'}),
+			data: JSON.stringify({'post_id': id_string.substring(10),'user_id':'{{session["user_id"]}}'}),
 			contentType: 'application/json;charset=UTF-8',
 			success: function(result){
 				var post_like = parseInt($('#like_container_' + id_string.substring(10)).text());
@@ -34,7 +34,7 @@ $(function(){
 						$.ajax({
 							type:"POST",
 							url: "{{ url_for('pLikes.delete_pLike') }}",
-							data: JSON.stringify({'post_id':id_string.substring(10),'user_id':'1'}),
+							data: JSON.stringify({'post_id':id_string.substring(10),'user_id':'{{session["user_id"]}}'}),
 							contentType: 'application/json;charset=UTF-8',
 							success: function(result){
 								if(result.status == "OK"){
@@ -64,8 +64,10 @@ $(function(){
 			{% endfor %}
 			{% endif %}
 			</p>
+			{% if session['user_id'] %}
 			<p><button type = "button" class = "btn btn-success" id = "create_tag_btn"><span class="glyphicon glyphicon-plus"></span> Create Tag</button></p>
 			<p><button type = "button" class = "btn btn-success" id = "create_post_btn"><span class="glyphicon glyphicon-plus"></span> Create Post</button></p>
+			{% endif %}
 		</div>
 		<div class="alert alert-success fade in">
 	        <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
@@ -81,7 +83,7 @@ $(function(){
 		<div class = "row" id = "post_{{post_id}}">
 			<div class = "col-sm-3">
 				<div class = "well">
-					<p>Hakan</p>
+					<p>{{post.crt_username}}</p>
 					<p><button type = "button" class="btn btn-danger btn-sm">{{post.tag_name}}</button></p>
 					<p class = "pull-right">
 				    	<button type = "button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-envelope"></span></button>
