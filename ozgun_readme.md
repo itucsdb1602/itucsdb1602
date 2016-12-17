@@ -5,11 +5,12 @@
 * register - GET /register to get registration page (links to this page on the navigation when user isn't logged in). POST /register to register user then redirect to home (CREATE)
 * login - GET /login to get login page (links to this page on the navigation when user isn't logged in). POST /login to login which then redirect to home
 * logout - GET /logout to logout then redirect to home (Links for logout is under username dropdown after user logged in)
-* list - GET /users for list of all users rendered html (Links to this page on the navigation as "users") (READ)
 * settings - GET /settings to get settings page of current user (Links for settings is under username dropdown after user logged in). POST /settings to update current user and redirect to /settings (UPDATE)
+* search = GET /search?q=PARAM search usernames and fullnames of similar users. This search bar is on the navbar
 * delete account - links to deleting user is in /settings page. GET /delete to logout and delete current user then redirect to home (DELETE)
 
 ## users_friend
+* friends - GET /friends for list of friends of current logged in user (Links for settings is under username dropdown after user logged in) (READ)
 * get friendship status - On users page friendship status of each user shown as Friend or Close Friend (READ)
 * add friend - GET /users/{user-id}/friend to friend a user  (CREATE)
 * make close friend - GET /users/{user-id/closer to update friendship to close friend (UPDATE)
