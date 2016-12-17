@@ -1,0 +1,131 @@
+{% extends "layout.html" %}
+{% block title %} Users {% endblock %}
+{% block content %}
+<link rel="stylesheet" href="../static/css/login.css">
+<link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<style>
+.dropdown-menu a.icon {
+  position: relative;
+  padding-left: 20px;
+}
+.dropdown-menu a.icon .glyphicon {
+  top: 6px;
+  left: -10px;
+  font-size: 18px;
+}
+</style>
+
+	<div class="logo">Users</div>
+
+
+	<div class="row">
+	  {% for user in users %}
+	  <div class="col-sm-6 col-md-4">
+		<div class="thumbnail">
+		  <img src="https://robohash.org/{{user.username}}.png" width="200">
+		  <a name="{{user.id}}"></a>
+		  <div class="caption">
+			<h3>{{user.fullname}} (@{{user.username}})</h3>
+			<p>{{user.gender}}</p>
+			<p>
+        	  {% if not current_user.is_authenticated %}
+				<a href="/login" class="btn btn-info btn-lg" role="button"><span class="glyphicon glyphicon-plus"></span> Add as a Friend</a>
+			  {% else %}
+				<div class="btn-group">
+				  <button type="button"
+						  class="btn btn-lg dropdown-toggle
+					{% if user.friend %}
+						{% if user.closer_friend %}
+						  btn-success
+						{% elif user.friend %}
+						  btn-primary
+						{% endif %}
+					{% elif user.blocked %}
+						{% if user.flagged %}
+						  btn-danger
+						{% elif user.blocked %}
+						  btn-warning
+						{% endif %}
+					{% else %}
+					  btn-info
+					{% endif %}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					  {% if user.friend %}
+						{% if user.closer_friend %}
+						  <span class="glyphicon glyphicon-heart"></span> Close friend
+						{% elif user.friend %}
+						  <span class="glyphicon glyphicon-user"></span> Friend
+					  	{% endif %}
+					  {% elif user.blocked %}
+						{% if user.flagged %}
+						  <span class="glyphicon glyphicon-flag"></span> Flagged as Inappropriate
+						{% elif user.blocked %}
+						  <span class="glyphicon glyphicon-ban-circle"></span> Blocked
+					  	{% endif %}
+					{% else %}
+					  <span class="glyphicon glyphicon-plus"></span> Add as a Friend
+					{% endif %}
+					<span class="caret"></span>
+				  </button>
+				  <ul class="dropdown-menu">
+					{% if not user.blocked %}
+					<li>
+						{% if user.friend %}
+							<a href="/users/{{user.id}}/unfriend" class="icon">
+								<span class="glyphicon glyphicon-minus"></span>Unfriend
+							</a>
+						{% else %}
+							<a href="/users/{{user.id}}/friend" class="icon">
+								<span class="glyphicon glyphicon-plus"></span>Add as a Friend
+							</a>
+						{% endif%}
+					</li>
+					<li>
+						{% if user.closer_friend %}
+							<a href="/users/{{user.id}}/friend?is_new=0" class="icon">
+								<span class="glyphicon glyphicon-user"></span>Make Normal Friend
+							</a>
+						{% else %}
+							<a href="/users/{{user.id}}/closer{% if user.friend %}?is_new=0{% endif %}" class="icon">
+								<span class="glyphicon glyphicon-heart"></span>Add as a Closer Friend
+							</a>
+						{% endif %}
+					</li>
+					{% endif %}
+					<li role="separator" class="divider"></li>
+					{% if not user.friend %}
+					<li>
+						{% if user.blocked %}
+							<a href="/users/{{user.id}}/unblock" class="icon">
+								<span class="glyphicon glyphicon-ok-circle"></span>Unblock
+							</a>
+						{% else %}
+							<a href="/users/{{user.id}}/block" class="icon">
+								<span class="glyphicon glyphicon-ban-circle"></span>Block
+							</a>
+						{% endif%}
+					</li>
+					<li>
+						{% if user.flagged %}
+							<a href="/users/{{user.id}}/block?is_new=0" class="icon">
+								<span class="glyphicon glyphicon-remove"></span>Remove Flag
+							</a>
+						{% else %}
+							<a href="/users/{{user.id}}/flag{% if user.blocked %}?is_new=0{% endif %}" class="icon">
+								<span class="glyphicon glyphicon-flag"></span>Flag as inappropriate
+							</a>
+						{% endif%}
+					</li>
+					{% endif %}
+				  </ul>
+				</div>
+			  {% endif %}
+			</p>
+		  </div>
+		</div>
+	  </div>
+	  {% endfor %}
+	</div>
+
+{% endblock %}
+{% block footer %} <p>Özgün Kıvrakdal<p> {% endblock %}
