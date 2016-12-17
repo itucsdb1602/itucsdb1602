@@ -4,9 +4,10 @@
   <title>PostIT - {% block title %} {%endblock%}</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="../../static/css/bootstrap.min.css">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="../../static/js/bootstrap.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   <style>
     /* Set black background color, white text and some padding */
     footer {
@@ -37,8 +38,8 @@
         <li><a href="/gokturk">Gokturk</a></li>
         <li><a href="/bilal">Bilal</a></li>
         <li><a href="/samet">Samet</a></li>
-        <li><a href="/ozgun">Ozgun </a></li>
         <li><a href="/ibrahim">Ibrahim</a></li>
+        <li><a href="/users">Users</a></li>
       </ul>
       <form class="navbar-form navbar-right" role="search">
         <div class="form-group input-group">
@@ -51,7 +52,27 @@
         </div>
       </form>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="/ozgun"><span class="glyphicon glyphicon-user"></span> My Account</a></li>
+        {% if not current_user.is_authenticated %}
+
+        <li><a href="/register">Register</a></li>
+        <li><a href="/login">Login</a></li>
+        {% endif %}
+
+        {% if current_user.is_authenticated %}
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-user"></span>
+            {{ current_user.username }}
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="/settings">Settings</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="/logout">Logout</a></li>
+          </ul>
+        </li>
+        {% endif %}
+
       </ul>
     </div>
   </div>
