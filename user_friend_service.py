@@ -2,6 +2,9 @@ import psycopg2 as dbapi2
 from user_class import User
 from flask.globals import current_app, request
 
+from user_block_service import UserBlockService
+block_service = UserBlockService()
+
 class UserFriendService(object):
     def create_table(self):
         with dbapi2.connect(current_app.config['dsn']) as connection:
@@ -25,6 +28,23 @@ class UserFriendService(object):
             query = """DROP TABLE users_friend CASCADE"""
             cursor.execute(query)
             connection.commit()
+
+    def list_friends(self, current_user):
+        with dbapi2.connect(current_app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = """SELECT id, username, email, passwordHash, fullname, gender FROM users
+                    WHERE id IN (SELECT friend_user_id FROM users_friend WHERE user_id = %s)"""
+            cursor.execute(query, (current_user.id,))
+            users = []
+            for user_id, username, email, passwordHash, fullname, gender in cursor:
+                user = User(username, email, passwordHash, fullname, gender)
+                user.id = user_id
+                user.blocked, user.flagged, user.friend, user.closer_friend = False, False, False, False
+                if current_user.is_authenticated:
+                    user.blocked, user.flagged = block_service.get_state(current_user.id, user.id)
+                    user.friend, user.closer_friend = self.get_state(current_user.id, user.id)
+                users.append(user)
+            return users
 
     def get_state(self, current_user_id, other_user_id):
         level = 0

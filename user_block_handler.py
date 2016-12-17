@@ -23,7 +23,7 @@ def block(user_id):
     else:
         is_new_block = is_new_block == '1'
     user_block.service.block(current_user.id, user_id, is_new_block)
-    return redirect(url_for('user.list', _anchor=user_id))
+    return redirect(request.referrer + "#" + str(user_id))
 
 @user_block.route('/users/<user_id>/flag')
 @login_required
@@ -35,10 +35,10 @@ def flag(user_id):
     else:
         is_new_block = is_new_block == '1'
     user_block.service.flag(current_user.id, user_id, is_new_block)
-    return redirect(url_for('user.list', _anchor=user_id))
+    return redirect(request.referrer + "#" + str(user_id))
 
 @user_block.route('/users/<user_id>/unblock')
 @login_required
 def unblock(user_id):
     user_block.service.unblock(current_user.id, user_id)
-    return redirect(url_for('user.list', _anchor=user_id))
+    return redirect(request.referrer + "#" + str(user_id))

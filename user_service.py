@@ -71,22 +71,6 @@ class UserService(object):
                 user = None
             return user
 
-    def list_all_users(self, current_user):
-        with dbapi2.connect(current_app.config['dsn']) as connection:
-            cursor = connection.cursor()
-            query = """SELECT id, username, email, passwordHash, fullname, gender FROM users"""
-            cursor.execute(query)
-            users = []
-            for user_id, username, email, passwordHash, fullname, gender in cursor:
-                user = User(username, email, passwordHash, fullname, gender)
-                user.id = user_id
-                user.blocked, user.flagged, user.friend, user.closer_friend = False, False, False, False
-                if current_user.is_authenticated:
-                    user.blocked, user.flagged = block_service.get_state(current_user.id, user.id)
-                    user.friend, user.closer_friend = friend_service.get_state(current_user.id, user.id)
-                users.append(user)
-            return users
-
     def search(self, search_query, current_user):
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
