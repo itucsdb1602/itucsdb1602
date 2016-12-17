@@ -13,3 +13,4 @@ class Post:
         self.group_name = kwargs.get('group_name', None)
         self.post_like = kwargs.get('post_like',None)
         self.comment_counter = kwargs.get('comment_counter',None)
+        self.crt_username = kwargs.get('crt_username',None)

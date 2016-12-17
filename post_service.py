@@ -28,8 +28,8 @@ class PostService:
     def add_post(self,post):
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "INSERT INTO posts (title, post_text, tag_id, crt_id, crt_time ) VALUES (%s,%s,%s,1,CURRENT_TIMESTAMP) RETURNING id"
-            cursor.execute(query,(post.title,post.post_text,post.tag_id))
+            query = "INSERT INTO posts (title, post_text, tag_id, crt_id, crt_time ) VALUES (%s,%s,%s,%s,CURRENT_TIMESTAMP) RETURNING id"
+            cursor.execute(query,(post.title,post.post_text,post.tag_id,post.crt_username))
             connection.commit()
             return cursor.fetchone()[0];
 
@@ -37,24 +37,27 @@ class PostService:
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
             query = """SELECT posts.id, posts.title, posts.post_text, posts.tag_id, posts.crt_id, posts.crt_time,
-                        posts.upd_id, posts.upd_time, posts.group_id, tags.name AS tag_name
+                        posts.upd_id, posts.upd_time, posts.group_id, tags.name AS tag_name, users.username AS crt_username
                             FROM posts
-                            LEFT JOIN tags ON posts.tag_id = tags.id"""
+                            LEFT JOIN tags ON posts.tag_id = tags.id
+                            LEFT JOIN users ON posts.crt_id = users.id"""
             cursor.execute(query)
-            all_posts = [(key, Post(post_text, tag_id, title, crt_id = crt_id, crt_time = crt_time, upd_id = upd_id, upd_time = upd_time, group_id = group_id, tag_name = tag_name))
-                        for key,title,post_text,tag_id, crt_id, crt_time, upd_id, upd_time, group_id, tag_name in cursor]
+            all_posts = [(key, Post(post_text, tag_id, title, crt_id = crt_id, crt_time = crt_time, upd_id = upd_id, upd_time = upd_time, group_id = group_id, tag_name = tag_name, crt_username = crt_username))
+                        for key,title,post_text,tag_id, crt_id, crt_time, upd_id, upd_time, group_id, tag_name, crt_username in cursor]
             return all_posts
 
     def get_post(self,post_id):
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
             query = """SELECT posts.id, posts.title, posts.post_text, posts.tag_id, posts.crt_id, posts.crt_time,
-                        posts.upd_id, posts.upd_time, posts.group_id, tags.name AS tag_name
+                        posts.upd_id, posts.upd_time, posts.group_id, tags.name AS tag_name, users.username AS crt_username
                             FROM posts
-                            LEFT JOIN tags ON posts.tag_id = tags.id WHERE posts.id = %s"""
+                            LEFT JOIN tags ON posts.tag_id = tags.id
+                            LEFT JOIN users ON posts.crt_id = users.id
+                            WHERE posts.id = %s"""
             cursor.execute(query,(post_id,))
-            key,title,post_text,tag_id, crt_id, crt_time, upd_id, upd_time, group_id, tag_name =  cursor.fetchone()
-            return Post(post_text, tag_id, title, crt_id = crt_id, crt_time = crt_time, upd_id = upd_id, upd_time = upd_time, group_id = group_id, tag_name = tag_name, id = key)
+            key,title,post_text,tag_id, crt_id, crt_time, upd_id, upd_time, group_id, tag_name, crt_username =  cursor.fetchone()
+            return Post(post_text, tag_id, title, crt_id = crt_id, crt_time = crt_time, upd_id = upd_id, upd_time = upd_time, group_id = group_id, tag_name = tag_name, id = key, crt_username = crt_username)
 
     def update_post(self,post_id,title,tag_id,post_text):
         with dbapi2.connect(current_app.config['dsn']) as connection:
