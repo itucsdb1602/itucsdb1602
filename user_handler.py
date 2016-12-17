@@ -70,6 +70,11 @@ def list():
     users = user.service.list_all_users(current_user)
     return render_template('users.html', users=users)
 
+@user.route('/search')
+def search():
+    users = user.service.search(request.args.get('q'), current_user)
+    return render_template('users.html', users=users)
+
 @user.route('/settings', methods=['GET', 'POST'])
 @login_required
 def settings():
