@@ -17,6 +17,8 @@ from keywords_handler import keywords
 from post_handler import post
 from group_handler import group
 from comments_handler import comment
+from post_keywords_handler import pKeywordss
+from user_subs_handler import uSubs
 
 app = Flask(__name__)
 
@@ -36,6 +38,8 @@ app.register_blueprint(keywords)
 app.register_blueprint(post)
 app.register_blueprint(group)
 app.register_blueprint(comment)
+app.register_blueprint(pKeywordss)
+app.register_blueprint(uSubs)
 
 
 
