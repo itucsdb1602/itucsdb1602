@@ -30,11 +30,11 @@ class GroupUserService:
     def get_all_group_user(self,group_id):
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = """SELECT gUsers.user_id, gUsers.group_id, gUsers.isAdmin FROM gUsers
+            query = """SELECT gUsers.user_id, gUsers.group_id, gUsers.isAdmin, users.username FROM gUsers
             LEFT JOIN users ON gUsers.user_id = users.id WHERE gUsers.group_id = %s"""
             cursor.execute(query,(group_id,))
-            all_groups_users = [(GroupUser(user_id, group_id, isAdmin))
-                        for user_id,group_id,isAdmin in cursor]
+            all_groups_users = [(GroupUser(user_id, group_id, isAdmin,user_name = username))
+                        for user_id,group_id,isAdmin, username in cursor]
             return all_groups_users
 
     def delete_group_user(self,GroupUser):

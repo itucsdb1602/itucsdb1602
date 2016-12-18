@@ -3,12 +3,6 @@
 {% block content %}
 <script type="text/javascript">
 $(function(){
-	$('#create_tag_btn').click(function(){
-		location.href = "{{ url_for('tag.add_tag') }}";
-	});
-	$('#create_post_btn').click(function(){
-		location.href = "{{ url_for('post.add_post') }}";
-	});
 	$('[id *= "comments_"]').click(function(){
 		//var id_string = '' + $(this).attr('id').toString();
 		location.href = "/posts/"+ $(this).attr('id').substring(9);
@@ -64,13 +58,13 @@ $(function(){
 	        <p><strong><a href="/groups">Search groups!</a></strong></p>
       	</div>
 	</div>
-	<div class = "col-sm-9">
+	<div class = "col-sm-7">
 		{% if all_posts %}
 		{% for post_id, post in all_posts %}
 		<div class = "row">
 			<div class = "col-sm-3">
 				<div class = "well">
-					<p>Hakan</p>
+					<p>{{post.crt_username}}</p>
 					<p><button type = "button" class="btn btn-danger btn-sm">{{post.tag_name}}</button></p>
 					<p class = "pull-right">
 				    	<button type = "button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-envelope"></span></button>
@@ -86,7 +80,15 @@ $(function(){
 					</p>
 				</div>
 			</div>
-
+		</div>
+		{% endfor %}
+		{% endif %}
+	</div>
+	<div class = "col-sm-2 well">
+		{% if all_users %}
+		{% for gUsers in all_users %}
+		<div class = "row">
+			<p><button type = "button" class="btn btn-danger btn-sm">{{gUsers.user_name}}</button></p>
 		</div>
 		{% endfor %}
 		{% endif %}
