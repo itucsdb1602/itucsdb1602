@@ -4,6 +4,7 @@ from flask import Blueprint, render_template, jsonify
 from flask.globals import current_app, request
 from keywords_service import keywordsService
 from keywords_class import Keywords
+from tag_service import TagService
 
 keywords = Blueprint('keywords',__name__)
 keywords.service = keywordsService()
@@ -21,15 +22,29 @@ def init_keywords_tbl():
 @keywords.route('/keywordss/add', methods = ['GET', 'POST'])
 def add_keywords():
     if request.method == 'GET':
-        return render_template('add_keywords.html')
+        tagServiceObject = TagService()
+        try:
+            all_tags = tagServiceObject.get_all_tags()
+        except:
+            all_tags = None
+        return render_template('add_keywords.html',all_tags = all_tags)
     else:
-        keywordsObject = Keywords(request.json['name'])
+        keywordsObject = Keywords(request.json['name'],request.json['tag_id'])
         try:
             keywords.service.add_keywords(keywordsObject)
         except dbapi2.Error as e:
             return jsonify({'status' : 'FAIL', 'errcode' : e.pgcode})
 
         return jsonify({'status' : 'OK', 'errcode' : '00000'})
+@keywords.route('/keywordss/get_keywords_by_tag_id', methods = ['GET', 'POST'])
+def get_keywordss_by_tag_id():
+    if request.method == 'POST':
+        try:
+                keywords_dropdown_result = keywords.service.get_keywordss_by_tag_id(request.json['tag_id'])
+        except dbapi2.Error as e:
+            return jsonify({'status' : 'FAIL', 'errcode' : e.pgcode})
+        return jsonify({'status' : 'OK', 'errcode' : '00000', 'data' : keywords_dropdown_result})
+
 @keywords.route('/keywordss', methods = ['GET', 'POST'])
 def get_keywordss():
     if request.method == 'GET':
@@ -53,11 +68,16 @@ def get_keywordss():
 @keywords.route('/keywordss/<int:keywords_id>', methods = ['GET', 'POST'])
 def update_keywords(keywords_id):
     if request.method == 'GET':
+        tagServiceObject = TagService()
         upd_keywords = keywords.service.get_keywords(keywords_id)
-        return render_template('edit_keywords.html',upd_keywords = upd_keywords);
+        try:
+            all_tags = tagServiceObject.get_all_tags()
+        except:
+            all_tags = None
+        return render_template('edit_keywords.html',upd_keywords = upd_keywords,all_tags = all_tags);
     else:
         try:
-            keywords.service.update_keywords(request.json['id'],request.json['name'])
+            keywords.service.update_keywords(request.json['id'],request.json['tag_id'],request.json['name'])
         except dbapi2.Error as e:
             return jsonify({'status' : 'FAIL', 'errcode' : e.pgcode})
 

@@ -10,6 +10,7 @@ from comments_service import CommentService
 from post_like_service import PostLikeService
 from comment_like_service import CommentLikeService
 from user_service import UserService
+from post_keywords_service import PostKeywrodsService
 
 post = Blueprint('post',__name__)
 post.service = PostService()
@@ -118,7 +119,9 @@ def update_post(post_id):
         tagServiceObject = TagService()
         all_tags = tagServiceObject.get_all_tags()
         postObject = post.service.get_post(post_id)
-        return render_template('edit_post.html', postObject = postObject, all_tags = all_tags)
+        postKeywordsServiceObject = PostKeywrodsService()
+        all_post_keywords = postKeywordsServiceObject.get_all_post_keywords(post_id)
+        return render_template('edit_post.html', postObject = postObject, all_tags = all_tags,all_post_keywords = all_post_keywords)
     else:
         errList = [];
         if getHTMLText(request.json['post_text']) == "":

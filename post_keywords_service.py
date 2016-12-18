@@ -1,6 +1,7 @@
 import psycopg2 as dbapi2
 
 from post_keywords_class import PostKeywords
+from keywords_class import Keywords
 from flask.globals import current_app, request
 
 
@@ -27,10 +28,13 @@ class PostKeywrodsService:
     def get_all_post_keywords(self,post_id):
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "SELECT COUNT(keywords_id) FROM pKeywordss WHERE post_id = %s"
+            query = """SELECT keywordss.id ,keywordss.name FROM pKeywordss
+                        LEFT JOIN keywordss ON pkeywordss.keywords_id = keywordss.id
+                         WHERE post_id = %s"""
             cursor.execute(query,(post_id,))
-            all_post_keywordss = cursor.fetchone()[0]
-            return all_post_keywordss
+            all_post_keywords = [Keywords(keywords_name,None,id = keywords_id)
+                        for keywords_id, keywords_name in cursor]
+            return all_post_keywords
 
     def delete_post_keywords(self,PostKeywords):
         with dbapi2.connect(current_app.config['dsn']) as connection:

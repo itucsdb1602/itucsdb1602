@@ -61,6 +61,7 @@ $(function(){
 					$.each(result.data, function(key,value){
 						row_html += '<tr id = "keywords_item_' + value.id + '">'
 							     + 		'<td>' + value.name +'</td>'
+							     + 		'<td>' + value.tag_name +'</td>'
 							     +  	'<td>'
 								 + 			'<button type = "button" class = "btn btn-warning btn-sm" onclick = "updatekeywordsItem('+ value.id +');"><span class="glyphicon glyphicon-pencil"></span></button>'
 								 + 			'<button type = "button" class = "btn btn-danger btn-sm" onclick = "deletekeywordsItem('+ value.id +');"><span class="glyphicon glyphicon-trash"></span></button>'
@@ -100,6 +101,7 @@ $(function(){
 			<thead>
 				<tr>
 					<th class = "text-center">keywords Name</th>
+					<th class = "text-center">Tag Name</th>
 					<th class = "text-center">Operations</th>
 				</tr>
 			</thead>
@@ -108,6 +110,7 @@ $(function(){
 					{% for keywords_id, keywords in all_keywordss %}
 						<tr id = "keywords_item_{{keywords_id}}">
 							<td>{{ keywords.name }}</td>
+							<td>{{ keywords.tag_name }}</td>
 							<td>
 								<button type = "button" class = "btn btn-warning btn-sm" onclick = "updatekeywordsItem({{keywords_id}});"><span class="glyphicon glyphicon-pencil"></span></button>
 								<button type = "button" class = "btn btn-danger btn-sm" onclick = "deletekeywordsItem({{keywords_id}});"><span class="glyphicon glyphicon-trash"></span></button>

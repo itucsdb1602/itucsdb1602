@@ -2,7 +2,9 @@
 {% block title %} Hakan's Page {% endblock %}
 {% block content %}
 <link href="../../static/summernote/summernote.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/css/bootstrap-select.min.css">
 <script src="../../static/summernote/summernote.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.min.js"></script>
 <script type="text/javascript">
 function popAlertDiv(status, errmsg){
 	$('#error_alert').hide();
@@ -44,6 +46,21 @@ $(function(){
 			success: function(result){
 				console.log(result);
 				popAlertDiv(result.status, result.errmsg);
+				if(result.status == "OK"){
+					$.each($('.selectpicker option:selected'), function(){
+						$.ajax({
+							type: "POST",
+							url: "{{ url_for('pKeywordss.delete_pKeywords') }}",
+							data: JSON.stringify({
+													'keywords_id': '' + $(this).val(),
+													'post_id': '{{postObject.id}}'
+												}),
+							contentType: 'application/json;charset=UTF-8',
+							success: function(result2){
+							}
+						});
+					});
+				}
 			}
 		});
 	})
@@ -70,6 +87,16 @@ $(function(){
 		      <select class = "form-control" id = "tag_select">
 		      {% for tag_id, tag in all_tags %}
 		      	<option value = "{{tag_id}}">{{ tag.name }}</option>
+		      {% endfor %}
+		      </select>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label class="control-label col-sm-2">Keywordss:</label>
+		    <div class="col-sm-8" id = "keywordss_select_container">
+		      <select class = "selectpicker" id = "keywords_select" multiple>
+		      {% for keywords in all_post_keywords %}
+		      	<option value = "{{keywords.id}}">{{ keywords.name }}</option>
 		      {% endfor %}
 		      </select>
 		    </div>
