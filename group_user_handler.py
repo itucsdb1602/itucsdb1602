@@ -32,7 +32,7 @@ def add_gUsers():
 @gUsers.route('/gUsers/delete', methods = ['GET', 'POST'])
 def delete_gUsers():
     if request.method == 'POST':
-        gU = GroupUser(request.json['user_id'],request.json['group_id'])
+        gU = GroupUser(request.json['user_id'],request.json['group_id'],1)
         try:
            gUsers.service.delete_group_user(gU)
         except dbapi2.Error as e:

@@ -61,7 +61,7 @@ $(function(){
 	});
 
 	$('#search_group_button').click(function(){
-		$('#groupss_table > tbody').empty();
+		$('#group_table > tbody').empty();
 		$.ajax({
 			type: "POST",
 			url: "{{ url_for('group.get_groups') }}",
@@ -78,13 +78,13 @@ $(function(){
 						row_html += '<tr id = "group_item_' + value.id + '">'
 							     + 		'<td>' + value.name +'</td>'
 							     +  	'<td>'
-							     +			'<button type = "button" class = "btn btn-success btn-sm" onclick = "joinGroupItem('+ value.id +');"><span class="glyphicon glyphicon-chevron-right"></span></button>'
-								 + 			'<button type = "button" class = "btn btn-warning btn-sm" onclick = "updateGroupItem('+ value.id +');"><span class="glyphicon glyphicon-pencil"></span></button>'
+							     +			'<button type = "button" class = "btn btn-success btn-sm" onclick = "joinGroupItem('+ value.id +');"><span class="glyphicon glyphicon-log-in"></span></button>&nbsp;'
+								 + 			'<button type = "button" class = "btn btn-warning btn-sm" onclick = "updateGroupItem('+ value.id +');"><span class="glyphicon glyphicon-pencil"></span></button>&nbsp;'
 								 + 			'<button type = "button" class = "btn btn-danger btn-sm" onclick = "deleteGroupItem('+ value.id +');"><span class="glyphicon glyphicon-trash"></span></button>'
 							     +  	'</td>'
 						         + '</tr>'
 					});
-					$('#groups_table > tbody').append(row_html);
+					$('#group_table > tbody').append(row_html);
 				}
 				//popAlertDiv(result.status,result.errcode,group_id);
 			}
@@ -126,7 +126,7 @@ $(function(){
 						<tr id = "group_item_{{group_id}}">
 							<td>{{ group.name }}</td>
 							<td>
-								<button type = "button" class = "btn btn-success btn-sm" onclick = "joinGroupItem({{group_id}});"><span class="glyphicon glyphicon-chevron-right"></span></button>
+								<button type = "button" class = "btn btn-success btn-sm" onclick = "joinGroupItem({{group_id}});"><span class="glyphicon glyphicon-log-in"></span></button>
 								<button type = "button" class = "btn btn-warning btn-sm" onclick = "updateGroupItem({{group_id}});"><span class="glyphicon glyphicon-pencil"></span></button>
 								<button type = "button" class = "btn btn-danger btn-sm" onclick = "deleteGroupItem({{group_id}});"><span class="glyphicon glyphicon-trash"></span></button>
 							</td>

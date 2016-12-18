@@ -44,31 +44,33 @@ $(function(){
 		})
 	})
 });
-function deleteGroupItem(group_id){
+function deleteGroupItem(){
 	if(confirm('Are you sure?')){
 		$.ajax({
 			type: "POST",
 			url: "{{ url_for('gUsers.delete_gUsers') }}",
 			data: JSON.stringify({
-									'group_id': group_id
+									'user_id': '{{session["user_id"]}}',
+									'group_id': '{{group_id}}'
 								}),
 			contentType: 'application/json;charset=UTF-8',
 			success: function(result){
-				console.log(result);
-				popAlertDiv(result.status,result.errcode,group_id);
+				if(result.status == "OK"){
+					location.href = "{{url_for('group.get_groups')}}";
+				}
 			}
 		});
 	}
 };
 </script>
-	<div class = "row">
-		<p>{{group_name}}</p>
+	<div class = "page-header">
+			<h1>{{group_name}}</h1>
 	</div>
 	<div class="col-sm-3 well">
 		<div class="well">
 			<p>Welcome to postIT!</p>
 		</div>
-		<p>Get out of me from this group</p><button type = "button" class = "btn btn-danger btn-sm" onclick = "deleteGroupItem({{group_id}});"><span class="glyphicon glyphicon-trash"></span></button>
+		<p><button type = "button" class = "btn btn-danger btn-sm" onclick = "deleteGroupItem();"><span class="glyphicon glyphicon-log-out"></span> Leave Group</button></p>
 		<div class="alert alert-success fade in">
 	        <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
 	        <p><strong>Hey!</strong></p>
@@ -91,7 +93,7 @@ function deleteGroupItem(group_id){
 				    </p>
 				</div>
 			</div>
-			<div class = "col-sm-6">
+			<div class = "col-sm-9">
 				<div class = "well">
 					<p> <a href = "/posts/{{post_id}}">{{post.title}}</a> </p>
 					<p class = "pull-right">

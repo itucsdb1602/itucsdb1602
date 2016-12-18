@@ -4,6 +4,7 @@ class GroupUser:
         self.group_id = group_id
         self.isAdmin = isAdmin
         self.user_name = kwargs.get('user_name',None)
+
     def json_serialize(self):
         return {
             'user_id' : self.user_id

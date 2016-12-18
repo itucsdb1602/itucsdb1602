@@ -45,6 +45,15 @@ class GroupService:
             name = cursor.fetchone()[0]
             return name
 
+    def get_group_by_name(self,group_name):
+        with dbapi2.connect(current_app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM groups WHERE name ILIKE %s"
+            cursor.execute(query,("%" + group_name + "%",))
+            group_search_result = [Group(name,key).json_serialize()
+                        for key,name in cursor]
+            return group_search_result
+
     def update_group(self,group_id,input_name):
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()

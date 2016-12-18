@@ -21,13 +21,12 @@ def group_user(group_id):
         postLikeServiceObj = PostLikeService()
         commentServiceObj = CommentService()
         group_name = group.service.get_groupname_by_id(group_id)
-        delete_user_name = groupUserObj.get_all_group_user(group_id)
         all_posts = postServiceObj.get_all_posts_for_group(group_id)
         all_users = groupUserObj.get_all_group_user(group_id)
         for post_id, postObj in all_posts:
             postObj.post_like = postLikeServiceObj.get_all_post_like(post_id)
             postObj.comment_counter = commentServiceObj.get_comment_counter(post_id)
-        return render_template('group.html',all_posts = all_posts,all_users = all_users, group_name = group_name, delete_user_name = delete_user_name)
+        return render_template('group.html',all_posts = all_posts,all_users = all_users, group_name = group_name, group_id = group_id)
 
 @group.route('/groups/init')
 def init_group_tbl():
