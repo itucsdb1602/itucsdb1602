@@ -13,6 +13,8 @@ class CommentLikeService:
                 comment_id SERIAL NOT NULL,
                 PRIMARY KEY (user_id,comment_id),
                 FOREIGN KEY (comment_id) REFERENCES comments (id)
+                    ON DELETE CASCADE,
+                FOREIGN KEY (user_id) REFERENCES users (id)
                     ON DELETE CASCADE
             )"""
             cursor.execute(query)

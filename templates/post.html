@@ -236,12 +236,14 @@ $(function(){
 					<h3>{{postObject.title}}</h3>
 			</div>
 			<p>{{postObject.post_text|safe}}</p>
+			{% if postObject.crt_username == current_user.username %}
 			<p class = "pull-left">
 				<button type = "button" class="btn btn-warning btn-sm" id = "edit_post_{{postObject.id}}" ><span class="glyphicon glyphicon-pencil"></span></button>
 				<button type = "button" class="btn btn-danger btn-sm" id = "delete_post_{{postObject.id}}" ><span class="glyphicon glyphicon-trash"></span></button>
 			</p>
+			{% endif %}
 			<p class = "pull-right">
-				<button type = "button" class="btn btn-success btn-sm" id="post_1"><span class="glyphicon glyphicon-thumbs-up"></span> <div id='like_container'>{{postObject.post_like}}</div> </button>
+				<button type = "button" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-thumbs-up"></span> <div id='like_container'>{{postObject.post_like}}</div> </button>
 				<button type = "button" class="btn btn-default btn-sm" ><span class="glyphicon glyphicon-comment"></span><div id = 'comment_counter_container'>{{postObject.comment_counter}}</div></button>
 			</p>
 		</div>
@@ -284,9 +286,6 @@ $(function(){
 	<div class = "col-sm-3">
 		<div class = "well">
 			<p>{{current_user.username}}</p>
-			<p class = "pull-right">
-		    	<button type = "button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-envelope"></span></button>
-		    </p>
 		</div>
 	</div>
 	<div class = "col-sm-9">

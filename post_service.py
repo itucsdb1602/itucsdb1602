@@ -20,7 +20,11 @@ class PostService:
                 group_id INT,
                 FOREIGN KEY (tag_id) REFERENCES tags (id)
                     ON DELETE CASCADE
-                    ON UPDATE CASCADE
+                    ON UPDATE CASCADE,
+                FOREIGN KEY (crt_id) REFERENCES users (id)
+                    ON DELETE CASCADE,
+                FOREIGN KEY (upd_id) REFERENCES users (id)
+                    ON DELETE CASCADE
             )"""
             cursor.execute(query)
             connection.commit()
