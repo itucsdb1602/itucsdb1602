@@ -18,6 +18,8 @@ class CommentService:
                 upd_time TIMESTAMP,
                 FOREIGN KEY (post_id) REFERENCES posts (id)
                     ON UPDATE CASCADE
+                    ON DELETE CASCADE,
+                FOREIGN KEY (crt_id) REFERENCES users (id)
                     ON DELETE CASCADE
             )"""
             cursor.execute(query)
