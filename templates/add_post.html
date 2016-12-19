@@ -75,10 +75,10 @@ $(function(){
 												}),
 							contentType: 'application/json;charset=UTF-8',
 							success: function(result2){
-								location.href = '/posts/' + result.last_row_id;
 							}
 						});
 					});
+					location.href = '/posts/' + result.last_row_id;
 				}
 				else{
 					popErrorDiv(result.errmsg);

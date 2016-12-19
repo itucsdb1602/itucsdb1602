@@ -21,6 +21,7 @@ from post_keywords_handler import pKeywordss
 from user_subs_handler import uSubs
 from comment_like_handler import comment_like
 from group_user_handler import gUsers
+from complaint_handler import complaint
 
 app = Flask(__name__)
 
@@ -44,6 +45,7 @@ app.register_blueprint(pKeywordss)
 app.register_blueprint(uSubs)
 app.register_blueprint(comment_like)
 app.register_blueprint(gUsers)
+app.register_blueprint(complaint)
 
 
 
