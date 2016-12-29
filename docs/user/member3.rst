@@ -16,7 +16,7 @@ Adding
 
 To add a new keywords, you need to enter a name using the textboxes.Also click the *Add* button.
 
-   .. image:: images/samet/capture2.png
+   .. image:: images/samet/Capture2.png
       :scale: 100 %
       :alt: Adding demonstration
 
@@ -31,11 +31,11 @@ Deleting
 
 To delete a keywords, click the delete button. Then press the *Delete* button.
 
-   .. image:: images/samet/capture4.png
+   .. image:: images/samet/Capture4.png
       :scale: 100 %
       :alt: Deleting demonstration
 
-   .. image:: images/samet/capture5.png
+   .. image:: images/samet/Capture5.png
       :scale: 100 %
       :alt: Deleting demonstration
 
@@ -48,12 +48,13 @@ Updating
 
 To update the information of a keywords, select the keywords which would like to update and then enter the information as you would in adding. After that, click the *Update keywords* button and watch it happen.
 
-   .. image:: images/samet/capture6.png
+
+   .. image:: images/samet/Capture6.png
       :scale: 100 %
       :alt: Updating demonstration
 
 
-   .. image:: images/samet/capture7.png
+   .. image:: images/samet/Capture7.png
       :scale: 100 %
       :alt: Updating demonstration
 
@@ -67,7 +68,7 @@ Selecting
 
 To select the information of a keywords.
 
-   .. image:: images/samet/capture3.png
+   .. image:: images/samet/Capture3.png
       :scale: 100 %
       :alt: selecting demonstration
 
