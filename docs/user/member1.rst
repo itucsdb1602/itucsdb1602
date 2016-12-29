@@ -49,13 +49,13 @@ Parts Implemented by Özgün Kıvrakdal
 
    When user wants make unfriend and close friend that user it can manage as shown.
 
-* In add as a friend button, user can find add friend,add as a close friend, blocked and flag as an inappropriate flag.
+* In add as a friend button, users can find add friend,add as a close friend, blocked and flag as an inappropriate flag.
 
 .. figure::  images/ozgun/add_friend.png
    :align:   center
    :scale: 50 %
 
-* If user wans to withdrow block status from any user they can edit this and also user can edit blocked status as an inappropriate.
+* If user wants to withdrow block status from any user they can edit this and also user can edit blocked status as an inappropriate.
 
 .. figure::  images/ozgun/blocked.png
    :align:   center
