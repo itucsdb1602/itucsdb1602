@@ -1,13 +1,13 @@
 Welcome to itucsdb 1602's documentation!
 ===================================
 
-:Team: Team Name
+:Team: postIT
 
 :Members:
 
    * Member 1
    * Member 2
-   * Member 3
+   * Göktürk Gök
    * Member 4
    * Member 5
 
