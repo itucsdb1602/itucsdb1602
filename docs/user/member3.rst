@@ -16,7 +16,7 @@ Adding
 
 To add a new keywords, you need to enter a name using the textboxes.Also click the *Add* button.
 
-   .. image:: images/samet/Capture2.png
+   .. image:: images/samet/Capture2.PNG
       :scale: 100 %
       :alt: Adding demonstration
 
@@ -31,11 +31,11 @@ Deleting
 
 To delete a keywords, click the delete button. Then press the *Delete* button.
 
-   .. image:: images/samet/Capture4.png
+   .. image:: images/samet/Capture4.PNG
       :scale: 100 %
       :alt: Deleting demonstration
 
-   .. image:: images/samet/Capture5.png
+   .. image:: images/samet/Capture5.PNG
       :scale: 100 %
       :alt: Deleting demonstration
 
@@ -49,12 +49,12 @@ Updating
 To update the information of a keywords, select the keywords which would like to update and then enter the information as you would in adding. After that, click the *Update keywords* button and watch it happen.
 
 
-   .. image:: images/samet/Capture6.png
+   .. image:: images/samet/Capture6.PNG
       :scale: 100 %
       :alt: Updating demonstration
 
 
-   .. image:: images/samet/Capture7.png
+   .. image:: images/samet/Capture7.PNG
       :scale: 100 %
       :alt: Updating demonstration
 
@@ -68,7 +68,7 @@ Selecting
 
 To select the information of a keywords.
 
-   .. image:: images/samet/Capture3.png
+   .. image:: images/samet/Capture3.PNG
       :scale: 100 %
       :alt: selecting demonstration
 
@@ -88,7 +88,7 @@ Adding
 
 To add a new post keywords, you need to select keywords using the multiselector.Also click the *Create Post* button.
 
-   .. image:: images/samet/pkeywords1.png
+   .. image:: images/samet/pkeywords1.PNG
       :scale: 100 %
       :alt: Adding demonstration
 
@@ -102,11 +102,11 @@ Deleting
 To delete a keywords, click the delete button. Then press the *Delete* button. When you click to delete button of tag value. All
 Keywords value will be deleted.
 
-   .. image:: images/samet/pkeywords2.png
+   .. image:: images/samet/pkeywords2.PNG
       :scale: 100 %
       :alt: Deleting demonstration
 
-   .. image:: images/samet/pkeywords3.png
+   .. image:: images/samet/pkeywords3.PNG
       :scale: 100 %
       :alt: Deleting demonstration
 
@@ -119,7 +119,7 @@ Updating
 
 To update the information of a post keywords, select which keywords related which tag.
 
-   .. image:: images/samet/pkeywords4.png
+   .. image:: images/samet/pkeywords4.PNG
       :scale: 100 %
       :alt: Updating demonstration
 
