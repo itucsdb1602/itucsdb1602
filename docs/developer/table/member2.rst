@@ -29,8 +29,8 @@ pLikes (Post Likes) Table
 +---------+-----------+-------------+------------+-------------+-------------+
 
    + *USER_ID:* Indicates the user from users table.
-  
-  
+
+
 Comments Table
 --------------
 
