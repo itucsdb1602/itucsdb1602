@@ -15,7 +15,7 @@ Adding
 
 To add a new announcement, you need to enter a name using the textboxes.Also click the *Add* button.
 
-   .. image:: images/bilal/announcament/announcementAdd.png
+   .. image:: images/bilal/announcement/announcementAdd.png
       :scale: 100 %
       :alt: Adding demonstration
 
