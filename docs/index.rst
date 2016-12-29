@@ -1,4 +1,4 @@
-Welcome to itucsdb's documentation!
+Welcome to itucsdb 1602's documentation!
 ===================================
 
 :Team: Team Name
