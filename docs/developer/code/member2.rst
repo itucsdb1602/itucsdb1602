@@ -39,7 +39,8 @@ Adding complaint requires the existance of the complaint table to execute the ad
    def add_complaint(self,complaint):
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "INSERT INTO complaint ( complaint_text,complaint_object,complaint_object_id,crt_id, crt_time,is_done ) VALUES (%s,%s,%s,%s,CURRENT_TIMESTAMP,0)"
+            query = "INSERT INTO complaint ( complaint_text,complaint_object,complaint_object_id,crt_id, crt_time,is_done )
+                     VALUES (%s,%s,%s,%s,CURRENT_TIMESTAMP,0)"
             cursor.execute(query,(complaint.complaint_text,complaint.complaint_object,complaint.complaint_object_id,complaint.crt_id))
             connection.commit()
 
@@ -81,13 +82,17 @@ It is used to lists all the complaints with all informations in it.
     def get_all_complaints(self):
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = """SELECT complaint.id, complaint.complaint_text, complaint.complaint_object, complaint.complaint_object_id,complaint.crt_id, complaint.crt_time, users.username, complaint.is_done
+            query = """SELECT complaint.id, complaint.complaint_text, complaint.complaint_object,
+                           complaint.complaint_object_id,complaint.crt_id, complaint.crt_time, users.username, complaint.is_done
                         FROM complaint
                         LEFT JOIN users ON complaint.crt_id = users.id
                                 """
             cursor.execute(query)
-            all_complaints = [(key, Complaint(complaint_text, complaint_object, complaint_object_id, crt_id, crt_username = username, crt_time = crt_time,is_done = is_done))
-                        for key,complaint_text, complaint_object, complaint_object_id, crt_id, crt_time, username,is_done in cursor]
+            all_complaints = [(key, Complaint(complaint_text, complaint_object,
+                              complaint_object_id,crt_id, crt_username = username,
+                              crt_time = crt_time,is_done = is_done))
+                        for key,complaint_text, complaint_object, complaint_object_id,
+                           crt_id, crt_time, username,is_done in cursor]
             return all_complaints
 
 - **GET_Complaints_by_name**
@@ -99,12 +104,18 @@ It is used for the search operations to reach the complaint by seeking the name.
    def get_complaints_by_name(self,complaint_text):
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = """SELECT complaint.id, complaint.complaint_text, complaint.complaint_object, complaint.complaint_object_id,complaint.crt_id, complaint.crt_time, users.username, complaint.is_done
+            query = """SELECT complaint.id, complaint.complaint_text,
+                           complaint.complaint_object, complaint.complaint_object_id,
+                           complaint.crt_id, complaint.crt_time, users.username,
+                           complaint.is_done
                         FROM complaint
                         LEFT JOIN users ON complaint.crt_id = users.id WHERE complaint.complaint_text ILIKE %s"""
             cursor.execute(query,("%" + complaint_text + "%",))
-            complaints_search_result = [Complaint(complaint_text, complaint_object, complaint_object_id, crt_id, crt_username = username, crt_time = crt_time,is_done = is_done, id = key).json_serialize()
-                        for key,complaint_text, complaint_object, complaint_object_id, crt_id, crt_time, username,is_done in cursor]
+            complaints_search_result = [Complaint(complaint_text, complaint_object,
+                              complaint_object_id, crt_id, crt_username = username,
+                              crt_time = crt_time,is_done = is_done, id = key).json_serialize()
+                        for key,complaint_text, complaint_object, complaint_object_id,
+                              crt_id, crt_time, username,is_done in cursor]
             return complaints_search_result
 
 
@@ -149,7 +160,8 @@ Adding comment requires the existence of the comment table to execute the add op
        def add_comment(self,comment):
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "INSERT INTO comments ( comment_text, post_id, crt_id, crt_time ) VALUES (%s,%s,%s,CURRENT_TIMESTAMP)"
+            query = "INSERT INTO comments ( comment_text, post_id, crt_id, crt_time )
+                     VALUES (%s,%s,%s,CURRENT_TIMESTAMP)"
             cursor.execute(query,(comment.comment_text,comment.post_id,comment.crt_id))
             connection.commit()
 
@@ -178,7 +190,8 @@ To execute the update function, comment_id and comment_text which is going to be
        def update_comment(self,comment_id,comment_text):
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "UPDATE comments SET comment_text = %s, upd_id = 1, upd_time = CURRENT_TIMESTAMP WHERE id = %s"
+            query = "UPDATE comments SET comment_text = %s, upd_id = 1,
+                     upd_time = CURRENT_TIMESTAMP WHERE id = %s"
             cursor.execute(query,(comment_text,comment_id))
             connection.commit()
 
@@ -187,18 +200,21 @@ To execute the update function, comment_id and comment_text which is going to be
 
 It is used for listing by taking the unique ids' of the comments.
 
+
 .. code-block:: python
 
    def get_comment(self,comment_id):
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = """SELECT comments.id, comments.comment_text, comments.post_id,  comments.crt_id, comments.crt_time,
+            query = """SELECT comments.id, comments.comment_text, comments.post_id,
+                             comments.crt_id, comments.crt_time,
                         comments.upd_id, comments.upd_time
                             FROM comments WHERE comments.id = %s """
 
             cursor.execute(query,(comment_id,))
             key,comment_text, post_id, crt_id, crt_time, upd_id, upd_time =  cursor.fetchone()
-            return Comment(comment_text ,post_id , crt_id = crt_id, crt_time = crt_time, upd_id = upd_id, upd_time = upd_time, id = key)
+            return Comment(comment_text ,post_id , crt_id = crt_id,
+                     crt_time = crt_time, upd_id = upd_id, upd_time = upd_time, id = key)
 
 
 - **GET_comment_counter**
