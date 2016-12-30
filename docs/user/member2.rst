@@ -15,7 +15,7 @@ Complaint button below the user name.
       :scale: 100 %
       :alt: Complaint button.
 
-Here on the left side when logged-off, and right side when the user log-in COMPLAINT BOX is seen.
+Here on first image display when logged-off, and below it when the user log-in COMPLAINT BOX is seen.
 
    .. image:: images/gokturk/complaint_box_before_login.png
       :scale: 50 %
