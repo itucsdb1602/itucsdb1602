@@ -1,7 +1,7 @@
 Team:  itucsdb1602-postIT
 
 
-Members
+Members:
 
    * Özgün Kıvrakdal
    * Göktürk Gök
@@ -9,11 +9,14 @@ Members
    * Bilal Emre Gülşen
    * Hakan Görgün
 
+
 **
 
    .. image:: user/images/gokturk/postIT.png
-      :scale: 50 %
+      :scale: 100 %
       :alt: postIT icon.
+
+
 
    postIT can be defined such a generic social media which users canpost about any topics and discuss their opinions under the posts as comments. Users can also create and join a group which they
    want. There are also announcements which can be created displayed and removed by users and users can join in one of them.
@@ -35,4 +38,5 @@ Contents:
    :maxdepth: 5
 
    user/index
+   worksharing
    developer/index

@@ -12,7 +12,7 @@ If the complaint is evaluated then it can be updated via clicking to yellow upda
 Complaint button below the user name.
 
    .. image:: images/gokturk/complaint_button.png
-      :scale: 50 %
+      :scale: 100 %
       :alt: Complaint button.
 
 Here on the left side when logged-off, and right side when the user log-in COMPLAINT BOX is seen.
