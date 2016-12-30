@@ -5,7 +5,7 @@ In order to design postIT database, total work is shared between team members. T
 
 * **Özgün Kıvrakdal, 040100010**
 
-+ *Tables*
+   + *Tables*
 
       - users
       - users_friend
