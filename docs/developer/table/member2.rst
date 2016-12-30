@@ -17,18 +17,6 @@ Complaints Table
 
    + *IS_DONE:* Holds the info whether complaint is evaluated or not.
 
-pLikes (Post Likes) Table
--------------------------
-
-+---------+-----------+-------------+------------+-------------+-------------+
-| Name    | Data Type | Null Option | Uniqueness | Primary Key | Foreign Key |
-+=========+===========+=============+============+=============+=============+
-| USER_ID | INTEGER   | NOT NULL    | UNIQUE     | PRIMARY KEY | USERS       |
-+---------+-----------+-------------+------------+-------------+-------------+
-| POST_ID | INTEGER   | NOT NULL    | UNIQUE     | PRIMARY KEY | POSTS       |
-+---------+-----------+-------------+------------+-------------+-------------+
-
-   + *USER_ID:* Indicates the user from users table.
 
 
 Comments Table
@@ -56,6 +44,18 @@ Comments Table
    + *POST_ID:* Holds the id of post referenced from Posts table.
 
 
+pLikes (Post Likes) Table
+-------------------------
+
++---------+-----------+-------------+------------+-------------+-------------+
+| Name    | Data Type | Null Option | Uniqueness | Primary Key | Foreign Key |
++=========+===========+=============+============+=============+=============+
+| USER_ID | INTEGER   | NOT NULL    | UNIQUE     | PRIMARY KEY | USERS       |
++---------+-----------+-------------+------------+-------------+-------------+
+| POST_ID | INTEGER   | NOT NULL    | UNIQUE     | PRIMARY KEY | POSTS       |
++---------+-----------+-------------+------------+-------------+-------------+
+
+   + *USER_ID:* Indicates the user from users table.
 
 
 

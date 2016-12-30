@@ -3,19 +3,45 @@ Work Sharing
 
 In order to design postIT database, total work is shared between team members. Tables and main operations implemented by members are listed below.
 
+* **Göktürk Gök, 150110029**
+
+   + *Tables*
+
+      - Complaints
+      - Comments
+      - pLikes(Post Likes)
+
+   + *Database Operations*
+
+      - List, Add, Delete and Update Operations for Complaints
+      - Reference to User and Posts Tables in Complaints table
+
+      - List, Add, Delete and Update Operations for Comments Table
+      - Reference to User and Posts in Comments Table
+
+      - List, Add, Delete and Update Operations for pLikes relaion
+      - Reference to User and Posts in Comments Table
+
+   + *Interface Operations*
+
+      - Like Button container and display.
+      - Complaint Operations Page
+      - Each Comments adding updating and deleting operations
+      - Add, Delete and Update Pages for Complaints, Comment, pLikes.
+      - Complaint BOX link from home page and during the update direct to the related  comment/post which is operated.
 
 * **Bilal Emre Gülşen, 150110002**
 
    + *Tables*
 
       - Announcement
-      - Gorup
+      - Group
       - Groups
 
    + *Database Operations*
 
       - List, Add, Delete and Update Operations for Announcement Table
-      - Reference to User and Group Table in City Table
+      - Reference to User and Group Table
       - List, Add, Delete and Update Operations for Group Table
       - List, Add, Delete and Update Operations for Group-user Table
       - Reference to User and Group Table in group-user Table
