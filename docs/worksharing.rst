@@ -117,7 +117,6 @@ In order to design postIT database, total work is shared between team members. T
       - Reference to Tags Tables in Keywords table
       - List, Add, Delete and Update Operations for Post_keywords Table
       - Reference to Keywords and Posts in Post Keywords Table
-      - List, Add, Delete and Update Operations for pLikes relaion
 
    + *Interface Operations*
 
