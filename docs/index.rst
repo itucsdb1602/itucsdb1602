@@ -1,7 +1,10 @@
-Team:  itucsdb1602-postIT
+itucsdb1602 - postIT
+====================
+
+**Team:**  itucsdb1602-postIT
 
 
-Members:
+  **Members:**
 
    * Özgün Kıvrakdal
    * Göktürk Gök
@@ -27,12 +30,13 @@ Members:
 
    While users can do all the things they want , also they can be friends , unfriend and even a user can block another user if he/she doesn't like her/him. Another option for the clients is creating, joining deleting and updating a groups. This enables to users more together in postIT platform.
 
-
+   Sign up now and let make free yourself to think in postIT way !
 
 **
 
 
-Contents:
+Contents
+********
 
 .. toctree::
    :maxdepth: 5
@@ -40,3 +44,4 @@ Contents:
    user/index
    worksharing
    developer/index
+

@@ -75,6 +75,7 @@ To execute the update function, complaint_id should be selected to be operated a
 
 - **GET_ALL_Complaints**
 It is used to lists all the complaints with all informations in it.
+
 .. code-block:: python
 
     def get_all_complaints(self):
@@ -184,10 +185,9 @@ To execute the update function, comment_id and comment_text which is going to be
 
 - **GET**
 
-.. code-block:: python
-
 It is used for listing by taking the unique ids' of the comments.
 
+.. code-block:: python
 
    def get_comment(self,comment_id):
         with dbapi2.connect(current_app.config['dsn']) as connection:

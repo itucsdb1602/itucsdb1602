@@ -13,12 +13,10 @@ In order to design postIT database, total work is shared between team members. T
 
    + *Database Operations*
 
-      - List, Add, Delete and Update Operations for Complaints
+      - List, Add, Delete,Search and Update Operations for Complaints
       - Reference to User and Posts Tables in Complaints table
-
       - List, Add, Delete and Update Operations for Comments Table
       - Reference to User and Posts in Comments Table
-
       - List, Add, Delete and Update Operations for pLikes relaion
       - Reference to User and Posts in Comments Table
 
@@ -36,7 +34,7 @@ In order to design postIT database, total work is shared between team members. T
 
       - Announcement
       - Group
-      - Groups
+      - Group-user
 
    + *Database Operations*
 
