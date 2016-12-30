@@ -59,7 +59,7 @@ Also if any user deleted from users table, all table are automaticaly deleted fr
 *if one user blocks another user, one row is enough to keep this information*
 
 
-.. figure:: e-r_user.png
+.. figure:: e-r_userr.png
    :align:   center
    :scale: 50 %
 
