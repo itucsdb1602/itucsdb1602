@@ -3,6 +3,29 @@ Work Sharing
 
 In order to design postIT database, total work is shared between team members. Tables and main operations implemented by members are listed below.
 
+* **Özgün Kıvrakdal, 040100010**
+
++ *Tables*
+
+      - users
+      - users_friend
+      - users_block
+
+   + *Database Operations*
+
+      - List, Add, Delete,Search and Update Operations for users
+      - List, Add, Delete and Update Operations for users_friend table
+      - Reference to User in users_friend and users_block table
+      - List, Add, Delete and Update Operations for users_block table
+
+   + *Interface Operations*
+
+      - Search Button container and display.
+      - Settings, friends ,search, register and login pages
+      - Each friend and user operation
+      - Creation user tables.
+      - Add as a friend, close friend, block and flag as an inappropriate buttons in add as a friend.
+
 * **Göktürk Gök, 150110029**
 
    + *Tables*
