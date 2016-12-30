@@ -39,8 +39,9 @@ Adding complaint requires the existance of the complaint table to execute the ad
    def add_complaint(self,complaint):
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "INSERT INTO complaint ( complaint_text,complaint_object,complaint_object_id,crt_id, crt_time,is_done )
-                     VALUES (%s,%s,%s,%s,CURRENT_TIMESTAMP,0)"
+            query = "INSERT INTO complaint ( complaint_text,complaint_object,
+                     complaint_object_id,crt_id, crt_time,is_done )
+                      VALUES (%s,%s,%s,%s,CURRENT_TIMESTAMP,0)"
             cursor.execute(query,(complaint.complaint_text,complaint.complaint_object,complaint.complaint_object_id,complaint.crt_id))
             connection.commit()
 
@@ -82,8 +83,9 @@ It is used to lists all the complaints with all informations in it.
     def get_all_complaints(self):
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = """SELECT complaint.id, complaint.complaint_text, complaint.complaint_object,
-                           complaint.complaint_object_id,complaint.crt_id, complaint.crt_time, users.username, complaint.is_done
+            query = """SELECT complaint.id, complaint.complaint_text,
+                  complaint.complaint_object, complaint.complaint_object_id,
+                  complaint.crt_id, complaint.crt_time, users.username, complaint.is_done
                         FROM complaint
                         LEFT JOIN users ON complaint.crt_id = users.id
                                 """
@@ -109,7 +111,8 @@ It is used for the search operations to reach the complaint by seeking the name.
                            complaint.crt_id, complaint.crt_time, users.username,
                            complaint.is_done
                         FROM complaint
-                        LEFT JOIN users ON complaint.crt_id = users.id WHERE complaint.complaint_text ILIKE %s"""
+                        LEFT JOIN users ON complaint.crt_id = users.id
+                           WHERE complaint.complaint_text ILIKE %s"""
             cursor.execute(query,("%" + complaint_text + "%",))
             complaints_search_result = [Complaint(complaint_text, complaint_object,
                               complaint_object_id, crt_id, crt_username = username,
@@ -161,7 +164,7 @@ Adding comment requires the existence of the comment table to execute the add op
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
             query = "INSERT INTO comments ( comment_text, post_id, crt_id, crt_time )
-                     VALUES (%s,%s,%s,CURRENT_TIMESTAMP)"
+                       VALUES (%s,%s,%s,CURRENT_TIMESTAMP)"
             cursor.execute(query,(comment.comment_text,comment.post_id,comment.crt_id))
             connection.commit()
 

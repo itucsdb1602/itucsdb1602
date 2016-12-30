@@ -26,6 +26,8 @@ In order to design postIT database, total work is shared between team members. T
       - Creation user tables.
       - Add as a friend, close friend, block and flag as an inappropriate buttons in add as a friend.
 
+
+
 * **Göktürk Gök, 150110029**
 
    + *Tables*
@@ -50,6 +52,8 @@ In order to design postIT database, total work is shared between team members. T
       - Each Comments adding updating and deleting operations
       - Add, Delete and Update Pages for Complaints, Comment, pLikes.
       - Complaint BOX link from home page and during the update direct to the related  comment/post which is operated.
+
+
 
 * **Bilal Emre Gülşen, 150110002**
 
