@@ -1,14 +1,11 @@
-Parts Implemented by Özgün Kıvrakdal
-====================================
 
-
-Database Design
----------------
 
 Users table are implemented first, and users_friend and users_blocked table reference id column on users table.
 Also if any user deleted from users table, all table are automaticaly deleted from other tables.(cascade operation).
 
- * users table view
+Users Table
+-----------
+
 +--------------+-------------+-------------+------------+-------------+-------------+
 | Name         | Data Type   | Null Option | Uniqueness | Primary Key | Foreign Key |
 +==============+=============+=============+============+=============+=============+
@@ -28,7 +25,8 @@ Also if any user deleted from users table, all table are automaticaly deleted fr
 *password should kept encrypted in database*
 *gender column kept in database just for knowledge*
 
-* Users_friend table view
+Users_friend Table
+------------------
 
 +----------------+-----------+-------------+------------+-------------+-------------+
 | Name           | Data Type | Null Option | Uniqueness | Primary Key | Foreign Key |
@@ -43,7 +41,8 @@ Also if any user deleted from users table, all table are automaticaly deleted fr
 *friend_level column can be 1 or 2 according to friendship status*
 *if two users are friend each other, one row is enough to keep this information*
 
-* Users_blocked table view
+Users_block Table
+-----------------
 
 +-----------------+-----------+-------------+------------+-------------+-------------+
 | Name            | Data Type | Null Option | Uniqueness | Primary Key | Foreign Key |
