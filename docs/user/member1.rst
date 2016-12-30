@@ -12,7 +12,7 @@ Firstly, users should be register, to participate PostIT.
 
    .. image:: images/ozgun/register.png
       :scale: 100 %
-      :alt: All fields are required .
+      :alt: All fields are required.
 
 
 
