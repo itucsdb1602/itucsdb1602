@@ -102,3 +102,25 @@ In order to design postIT database, total work is shared between team members. T
       - Each Comment section, like button is appeared below
       - Add, Delete and Update Pages for Tag and Post
       - Drop-down Lists for Referenced Tables
+
+* **Samet Yılmaz, 040100051**
+
+   + *Tables*
+
+      - Keywords
+      - Post_keywords
+      - User_subs
+
+   + *Database Operations*
+
+      - List, Add, Delete,Search and Update Operations for Keywords
+      - Reference to Tags Tables in Keywords table
+      - List, Add, Delete and Update Operations for Post Table
+      - Reference to Keywords and Posts in Post Keywords Table
+      - List, Add, Delete and Update Operations for pLikes relaion
+
+   + *Interface Operations*
+
+      - Keywords Operations Page
+      - Each Keywords adding updating and deleting operations
+      - Add, Delete and Update Pages for Keywords and Post_keywords.
