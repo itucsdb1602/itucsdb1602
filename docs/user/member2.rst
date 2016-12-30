@@ -9,12 +9,12 @@ Complaints
 The complaint table can be operated via click on "COMPLAINT BOX" on the home page. Only users who logged-in can do Complaint operations and display via click on the post owner's box on posts and comments.
 If the complaint is evaluated then it can be updated via clicking to yellow update button on complaint in "COMPLAINT BOX".
 
-** Here on the left side when logged-off, and right side when the user log-in COMPLAINT BOX is seen.
-
+Complaint button below the user name.
    .. image:: images/gokturk/complaint_button.png
       :scale: 50 %
       :alt: Complaint button.
 
+Here on the left side when logged-off, and right side when the user log-in COMPLAINT BOX is seen.
    .. image:: images/gokturk/complaint_box_before_login.png
       :scale: 50 %
       :alt: Complaint Box appears only the user who logged-in on home page.
@@ -149,6 +149,7 @@ Added comment is shown.
       :alt: Added comment under the post.
 
 Added comment is displayed under the related post.
+
    .. image:: images/gokturk/comment_displayed.png
       :scale: 100 %
       :alt: Added comment under the post.
@@ -192,7 +193,8 @@ Update Comment
 To update the information of a *comment*, click the yellow update button which user would like to update via *yellow update button* then updating a comment will be done and listed under the post.
 
 
-Before updating a comment :
+Before updating a comment
+
    .. image:: images/gokturk/comment_before_update.png
       :scale: 100 %
       :alt: Before updating.
