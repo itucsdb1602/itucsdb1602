@@ -10,15 +10,16 @@ The complaint table can be operated via click on "COMPLAINT BOX" on the home pag
 If the complaint is evaluated then it can be updated via clicking to yellow update button on complaint in "COMPLAINT BOX".
 
 Complaint button below the user name.
+
    .. image:: images/gokturk/complaint_button.png
       :scale: 50 %
       :alt: Complaint button.
 
 Here on the left side when logged-off, and right side when the user log-in COMPLAINT BOX is seen.
+
    .. image:: images/gokturk/complaint_box_before_login.png
       :scale: 50 %
       :alt: Complaint Box appears only the user who logged-in on home page.
-
 
    .. image:: images/gokturk/complaint_box_login.png
       :scale: 50 %
